@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Astro Animation & E-Learning</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f0f0f0;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: black;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .page {
+            display: none;
+            padding: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .login-box {
+            background: rgb(37, 185, 188);
+            padding: 40px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 350px;
+            margin: 40px auto;
+            box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+
+        .login-btn {
+            background: #6c5ce7;
+            color: white;
+            padding: 14px;
+            width: 100%;
+            text-align: center;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .error {
+            color: rgb(255, 255, 255);
+            font-size: 20px;
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        /* Home Page Grid */
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .class-button {
+            background: linear-gradient(135deg, #6c5ce7, #0984e3);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            min-height: 150px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .class-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.4);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .class-button:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* Module Pages Grid */
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        .list-item {
+            background: #cccc09;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 18px;
+            color: rgb(0, 0, 0);
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-btn {
+            background: #4100a9;
+            padding: 12px;
+            width: 130px;
+            margin: 30px auto;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 159, 67, 0.3);
+        }
+
+        h2 {
+            font-size: 38px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ---------------- RECTANGLE POPUP ---------------- */
+        .rectangle-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .popup-rectangle {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8);
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .popup-header {
+            background: linear-gradient(135deg, #6c5ce7, #0984e3);
+            padding: 15px 25px;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #333;
+            flex-shrink: 0;
+            min-height: 60px;
+        }
+
+        .popup-close {
+            width: 45px;
+            height: 45px;
+            background: #ff4757;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .popup-close:hover {
+            background: #ff3742;
+            transform: scale(1.1);
+        }
+
+        .popup-content {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .popup-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
+        .popup-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        #videoPopup .popup-rectangle {
+            background: #000;
+        }
+
+        #videoPopup .popup-header {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .popup-title {
+            flex-grow: 1;
+            text-align: center;
+            padding: 0 20px;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Fullscreen button */
+        .fullscreen-toggle {
+            width: 45px;
+            height: 45px;
+            background: #0984e3;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s;
+        }
+
+        .fullscreen-toggle:hover {
+            background: #0870c4;
+            transform: scale(1.05);
+        }
+
+        /* When popup is open, hide everything else */
+        .popup-open body>*:not(.rectangle-popup),
+        .popup-open header {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .home-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding: 10px;
+            }
+
+            .class-button {
+                padding: 30px 15px;
+                font-size: 24px;
+                min-height: 120px;
+            }
+
+            .module-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 5px;
+            }
+
+            .list-item {
+                padding: 15px;
+                font-size: 16px;
+                min-height: 70px;
+            }
+
+            h2 {
+                font-size: 30px;
+            }
+
+            .popup-header {
+                padding: 12px 15px;
+                font-size: 18px;
+                min-height: 50px;
+            }
+
+            .popup-title {
+                font-size: 20px;
+            }
+
+            .popup-close,
+            .fullscreen-toggle {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .class-button {
+                font-size: 22px;
+                min-height: 100px;
+                padding: 25px 10px;
+            }
+
+            .popup-rectangle {
+                border-radius: 10px;
+                border-width: 2px;
+            }
+
+            .popup-header {
+                padding: 10px 12px;
+                font-size: 16px;
+                min-height: 45px;
+            }
+
+            .popup-title {
+                font-size: 18px;
+            }
+
+            .popup-close,
+            .fullscreen-toggle {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+                border-width: 2px;
+            }
+        }
+    </style>
+
+    <script>
+        let maxAttempts = 3;
+        let lockTime = 60;
+        let attempts = 0;
+
+        function showPage(id) {
+            document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+            document.getElementById(id).classList.add("active");
+        }
+
+        function login() {
+            let u = document.getElementById("username").value;
+            let p = document.getElementById("password").value;
+            let error = document.getElementById("errorMsg");
+
+            let lockedUntil = localStorage.getItem("lockedUntil");
+
+            if (lockedUntil && Date.now() < lockedUntil) {
+                let wait = Math.ceil((lockedUntil - Date.now()) / 1000);
+                error.innerHTML = "Too many attempts! Try again in " + wait + " seconds.";
+                disableLoginButton();
+                startCountdown(wait);
+                return;
+            }
+
+            if (lockedUntil && Date.now() >= lockedUntil) {
+                localStorage.removeItem("lockedUntil");
+                attempts = 0;
+            }
+
+            if (u === "admin" && p === "1234") {
+                attempts = 0;
+                localStorage.removeItem("lockedUntil");
+                showPage("home");
+                return;
+            }
+
+            attempts++;
+            error.innerHTML = "Invalid username or password (" + attempts + "/" + maxAttempts + ")";
+
+            if (attempts >= maxAttempts) {
+                let lockUntilTime = Date.now() + lockTime * 1000;
+                localStorage.setItem("lockedUntil", lockUntilTime);
+                disableLoginButton();
+                startCountdown(lockTime);
+            }
+        }
+
+        function disableLoginButton() {
+            let btn = document.querySelector(".login-btn");
+            btn.style.background = "#999";
+            btn.style.pointerEvents = "none";
+        }
+
+        function enableLoginButton() {
+            let btn = document.querySelector(".login-btn");
+            btn.style.background = "#6c5ce7";
+            btn.style.pointerEvents = "auto";
+        }
+
+        function startCountdown(seconds) {
+            let error = document.getElementById("errorMsg");
+
+            let interval = setInterval(() => {
+                let lockedUntil = localStorage.getItem("lockedUntil");
+                if (!lockedUntil) return;
+
+                let remaining = Math.ceil((lockedUntil - Date.now()) / 1000);
+
+                if (remaining <= 0) {
+                    clearInterval(interval);
+                    enableLoginButton();
+                    error.innerHTML = "";
+                    attempts = 0;
+                    localStorage.removeItem("lockedUntil");
+                } else {
+                    error.innerHTML = "Too many attempts! Try again in " + remaining + " seconds.";
+                }
+            }, 1000);
+        }
+
+        function goBack() {
+            showPage("home");
+        }
+
+        /* -------------- POPUP FUNCTIONS ---------------- */
+        function openPopup(url, title = "Content Viewer") {
+            const popup = document.getElementById("contentPopup");
+            const iframe = document.getElementById("popupIframe");
+            const popupTitle = document.querySelector("#contentPopup .popup-title");
+
+            popupTitle.textContent = title;
+            iframe.src = url;
+            popup.style.display = "flex";
+            document.body.classList.add('popup-open');
+        }
+
+        function openVideoPopup(videoPath, title = "Video Player") {
+            const popup = document.getElementById("videoPopup");
+            const video = document.getElementById("videoPlayer");
+            const source = document.getElementById("videoSource");
+            const popupTitle = document.querySelector("#videoPopup .popup-title");
+
+            popupTitle.textContent = title;
+            source.src = videoPath;
+            video.load();
+            video.play().catch(e => console.log("Autoplay prevented:", e));
+
+            popup.style.display = "flex";
+            document.body.classList.add('popup-open');
+        }
+
+        function closePopup() {
+            const contentPopup = document.getElementById("contentPopup");
+            const videoPopup = document.getElementById("videoPopup");
+
+            if (contentPopup.style.display === "flex") {
+                const iframe = document.getElementById("popupIframe");
+                iframe.src = "";
+                contentPopup.style.display = "none";
+            }
+
+            if (videoPopup.style.display === "flex") {
+                const video = document.getElementById("videoPlayer");
+                video.pause();
+                video.currentTime = 0;
+                document.getElementById("videoSource").src = "";
+                videoPopup.style.display = "none";
+            }
+
+            document.body.classList.remove('popup-open');
+        }
+
+        // Close popup with Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closePopup();
+            }
+        });
+
+        // Fullscreen functionality
+        function toggleFullscreen() {
+            const popup = document.querySelector(".rectangle-popup[style*='display: flex'] .popup-rectangle");
+            if (!popup) return;
+
+            if (!document.fullscreenElement) {
+                if (popup.requestFullscreen) {
+                    popup.requestFullscreen();
+                } else if (popup.webkitRequestFullscreen) {
+                    popup.webkitRequestFullscreen();
+                } else if (popup.msRequestFullscreen) {
+                    popup.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        function showHtml() {
+            window.location.href = 'htmlviewer.html';
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <header>Astro Animation & E-Learning</header>
+
+    <!-- LOGIN PAGE -->
+    <div class="page active" id="login">
+        <div class="login-box">
+            <h2>Login</h2>
+
+            <input type="text" id="username" class="input" placeholder="Enter Username">
+            <input type="password" id="password" class="input" placeholder="Enter Password">
+
+            <div class="login-btn" onclick="login()">LOGIN</div>
+
+            <div id="errorMsg" class="error"></div>
+        </div>
+    </div>
+
+    <!-- HOME PAGE with 2x2 Grid -->
+    <div class="page" id="home">
+        <h2>Choose Class</h2>
+        <div class="home-grid">
+            <div class="class-button" onclick="showPage('module1')">12th Grade</div>
+            <div class="class-button" onclick="showPage('module2')">11th Grade</div>
+            <div class="class-button" onclick="showPage('module3')">10th Grade</div>
+            <div class="class-button" onclick="showPage('module4')">9th Grade</div>
+            <div class="class-button" onclick="showPage('module5')">3D models</div>
+            <div class="class-button" onclick="showPage('module4')">Question Banks</div>
+        </div>
+    </div>
+
+    <!-- MODULE 1 - 12th -->
+    <div class="page" id="module1">
+        <h2>12th Grade</h2>
+        <div class="module-grid">
+            <div class="list-item" onclick="openPopup('/assets/p12.v1.14.1.3/p12.v1.14.1.3.html', '3.32.3')">3.32.3
+            </div>
+            <div class="list-item" onclick="openVideoPopup('/assets/videos/3.34.3.mp4', '3.34.3')">3.34.3</div>
+            <div class="list-item">Input & Output Devices</div>
+            <div class="list-item">Hardware & Software</div>
+            <div class="list-item">Storage Devices</div>
+            <div class="list-item">Computer Networks</div>
+            <div class="list-item">Programming Basics</div>
+            <div class="list-item">Database Management</div>
+        </div>
+        <div class="back-btn" onclick="showPage('home')">BACK</div>
+    </div>
+
+    <!-- MODULE 2 - 11th -->
+    <div class="page" id="module2">
+        <h2>11th Grade</h2>
+        <div class="module-grid">
+            <div class="list-item">MS Word – Basics</div>
+            <div class="list-item">MS Excel – Formulas</div>
+            <div class="list-item">MS PowerPoint – Slides</div>
+            <div class="list-item">Page Setup</div>
+            <div class="list-item">Templates</div>
+            <div class="list-item">Mail Merge</div>
+            <div class="list-item">Charts & Graphs</div>
+            <div class="list-item">Animations</div>
+        </div>
+        <div class="back-btn" onclick="showPage('home')">BACK</div>
+    </div>
+
+    <!-- MODULE 3 - 10th -->
+    <div class="page" id="module3">
+        <h2>10th Lab Interactivity</h2>
+        <div class="module-grid">
+            <div class="list-item" onclick="openPopup('/assets/3.34.3/3.34.3.html', '3.34.3')">3.34.3</div>
+            <div class="list-item" onclick="openPopup('/assets/3.35.3/3.35.3.html', '3.35.3')">3.35.3</div>
+            <div class="list-item" onclick="openPopup('/assets/3.37.3/3.37.3.html', '3.36.3')">3.36.3</div>
+            <div class="list-item" onclick="openPopup('/assets/3.38.3/3.38.3.html', '3.37.3')">3.37.3</div>
+            <div class="list-item" onclick="openPopup('/assets/3.39.3/3.39.3.html', '3.38.3')">3.38.3</div>
+            <div class="list-item" onclick="openPopup('/assets/3.40.3/3.40.3.html', '3.39.3')">3.39.3</div>
+            <div class="list-item" onclick="openPopup('/assets/3.41.3/3.41.3.html', '3.40.3')">3.40.3</div>
+            <div class="list-item" onclick="openPopup('/assets/3.42.3/3.42.3.html', '3.41.3')">3.41.3</div>
+            <div class="list-item" onclick="openPopup('/assets/3.43.3/3.43.3.html', '3.42.3')">3.42.3</div>
+            <div class="list-item" onclick="openPopup('/assets/3.44.3/3.44.3.html', '3.43.3')">3.43.3</div>
+            <div class="list-item" onclick="openPopup('/assets/3.45.3/3.45.3.html', '3.44.3')">3.44.3</div>
+            <div class="list-item" onclick="openPopup('/assets/3.46.3/3.46.3.html', '3.45.3')">3.45.3</div>
+            <div class="list-item" onclick="openPopup('/assets/01/3.32.3.v2.html', '3.46.3')">3.46.3</div>
+        </div>
+        <div class="back-btn" onclick="showPage('home')">BACK</div>
+    </div>
+
+    <!-- MODULE 4 - 9th -->
+    <div class="page" id="module4">
+        <h2>9th Grade</h2>
+        <div class="module-grid">
+            <div class="list-item">Photoshop Basics</div>
+            <div class="list-item">Layers & Masks</div>
+            <div class="list-item">Pen Tool</div>
+            <div class="list-item">Logo Design</div>
+            <div class="list-item">Exporting Files</div>
+            <div class="list-item">Color Theory</div>
+            <div class="list-item">Typography</div>
+            <div class="list-item">Image Manipulation</div>
+        </div>
+        <div class="back-btn" onclick="showPage('home')">BACK</div>
+    </div>
+
+
+    <!-- MODULE 5 - for3D models -->
+    <div class="page" id="module4">
+        <h2>3d models</h2>
+        <div class="module-grid">
+            <div class="list-item">Photoshop Basics</div>
+            <div class="list-item">Layers & Masks</div>
+            <div class="list-item">Pen Tool</div>
+            <div class="list-item">Logo Design</div>
+            <div class="list-item">Exporting Files</div>
+            <div class="list-item">Color Theory</div>
+            <div class="list-item">Typography</div>
+            <div class="list-item">Image Manipulation</div>
+        </div>
+        <div class="back-btn" onclick="showPage('home')">BACK</div>
+    </div>
+
+
+    <!-- MODULE 5 - Question -->
+
+    <div class="page" id="module5">
+        <h2>mcq</h2>
+        <div class="module-grid">
+            <div class="list-item" onclick="openPopup('/glbhtmls/ReciprocatingSaw.html')">ReciprocatingSaw</div>
+            <div class="list-item" onclick="openPopup('/glbhtmls/2CylinderEngine.html')">2CylinderEngine</div>
+            <div class="list-item" onclick="openPopup('/glbhtmls/AntiqueCamera.html')">AntiqueCamera</div>
+            <div class="list-item" onclick="openPopup('/glbhtmls/Avocado.html')">Avocado</div>
+            <div class="list-item" onclick="openPopup('/glbhtmls/BarramundiFish.html')">BarramundiFish</div>
+            <div class="list-item" onclick="openPopup('/glbhtmls/BrainStem.html')">BrainStem</div>
+            <div class="list-item" onclick="openPopup('/glbhtmls/CesiumMan.html')">CesiumMan</div>
+            <div class="list-item" onclick="openPopup('/glbhtmls/DragonAttenuation.html')">DragonAttenuation</div>
+            <div class="list-item" onclick="openPopup('/glbhtmls/WaterBottle.html')">WaterBottle</div>
+
+        </div>
+        <div class="back-btn" onclick="showPage('home')">BACK</div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- CONTENT POPUP -->
+    <div id="contentPopup" class="rectangle-popup">
+        <div class="popup-rectangle">
+            <div class="popup-header">
+                <div class="popup-title">Content Viewer</div>
+                <div class="header-controls">
+                    <div class="fullscreen-toggle" onclick="toggleFullscreen()" title="Toggle Fullscreen">⛶</div>
+                    <div class="popup-close" onclick="closePopup()" title="Close (Esc)">✖</div>
+                </div>
+            </div>
+            <div class="popup-content">
+                <iframe id="popupIframe" class="popup-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIDEO POPUP -->
+    <div id="videoPopup" class="rectangle-popup">
+        <div class="popup-rectangle">
+            <div class="popup-header">
+                <div class="popup-title">Video Player</div>
+                <div class="header-controls">
+                    <div class="fullscreen-toggle" onclick="toggleFullscreen()" title="Toggle Fullscreen">⛶</div>
+                    <div class="popup-close" onclick="closePopup()" title="Close (Esc)">✖</div>
+                </div>
+            </div>
+            <div class="popup-content">
+                <video id="videoPlayer" class="popup-video" controls>
+                    <source id="videoSource" src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
