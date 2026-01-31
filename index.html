@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astro Animation Studio</title>
+  <link rel="stylesheet" href="/color.css">
+  <script src="/main.js"></script>
+
+
+
+</head>
+
+<body>
+
+
+  <nav id="navbar" class="navbar">
+
+    <ul>
+
+
+
+      <div class="logo"><img src="/images/nav icon-02.png" alt="" width="125pxpx"></div>
+
+
+
+      <li><a href="#home">🏠Home</a></li>
+      <li><a href="#about" id="About">About Us</a></li>
+      <li><a href="#what-we-do">What We Do?</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="/contact.html">Contact Us</a></li>
+
+
+
+      <div class="open-btn" onclick="openForm()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+    </ul>
+
+
+
+
+  </nav>
+  <br><br>
+
+
+  <br>
+  <div>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: transparent;
+      }
+
+      .custom-carousel {
+        padding-left: 20px;
+        position: relative;
+        max-width: auto;
+        height: 500px;
+        margin: 50px auto;
+        overflow: hidden;
+      }
+
+      .carousel-item {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+
+      .carousel-item.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .carousel-img,
+      .carousel-text {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .carousel-img {
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transform: translateY(40px);
+        animation: fadeInBottom 1s ease forwards;
+        animation-delay: 0.5s;
+      }
+
+      .carousel-text {
+        opacity: 0;
+        transform: translateY(-40px);
+        animation: fadeInTop 1s ease forwards;
+        animation-delay: 0.3s;
+        text-align: left;
+      }
+
+      .carousel-text h2 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        color: #000;
+      }
+
+      .carousel-text p {
+        font-size: 1rem;
+        color: #000;
+      }
+
+      .circle {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        animation: fallCircle 1s ease-out forwards;
+        pointer-events: none;
+      }
+
+      @keyframes fadeInTop {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInBottom {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fallCircle {
+        0% {
+          transform: translateY(-50px);
+          opacity: 0.8;
+        }
+
+        80% {
+          opacity: 1;
+        }
+
+        100% {
+          transform: translateY(150px);
+          opacity: 0;
+        }
+      }
+    </style>
+    </head>
+
+    <body>
+
+      <div class="custom-carousel">
+        <div class="carousel-item active">
+          <div class="carousel-img" style="background-image: url('/images/captivate.png');"></div>
+          <div class="carousel-text">
+            <div>
+              <h2>"We turn concepts into captivating animated realities".</h2>
+              <p>Highlights how raw ideas are shaped into engaging, narrative-driven animations.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-img" style="background-image: url('/images/astro.png');"></div>
+          <div class="carousel-text">
+            <div>
+              <h2>"Elevate your brand with Astro Animation Studio"</h2>
+              <p>Emphasizes the journey from imagination to animated output, with a personal touch.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-img" style="background-image: url('/images/motion\ stunning.png');"></div>
+          <div class="carousel-text">
+            <div>
+              <h2>"Transform ideas into animated wonders"</h2>
+              <p>Direct and emotional, this line focuses on the magical aspect of animation.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-img" style="background-image: url('/images/frame\ by\ frame.png');"></div>
+          <div class="carousel-text">
+            <div>
+              <h2>"Animating dreams into reality, frame by frame"</h2>
+              <p>Focuses on both the technical and emotional impact of animated work.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const items = document.querySelectorAll('.carousel-item');
+        let index = 0;
+
+        function getRandomColor() {
+          const colors = ["#FF5733", "#33FFBD", "#FF33F6", "#3385FF", "#33FF57", "#FFB533", "#9D33FF"];
+          return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function createFallingCircles(container) {
+          for (let i = 0; i < 8; i++) {
+            const circle = document.createElement('div');
+            circle.className = 'circle';
+            const size = Math.random() * 12 + 5;
+            circle.style.width = `${size}px`;
+            circle.style.height = `${size}px`;
+            circle.style.left = `${Math.random() * 100}%`;
+            circle.style.background = getRandomColor();
+            circle.style.animationDelay = `${Math.random() * 0.6}s`;
+            container.appendChild(circle);
+            setTimeout(() => container.removeChild(circle), 1500);
+          }
+        }
+
+        function showItem(i) {
+          items.forEach((item, idx) => {
+            item.classList.remove('active');
+
+            const image = item.querySelector('.carousel-img');
+            const text = item.querySelector('.carousel-text');
+
+            image.style.animation = 'none';
+            text.style.animation = 'none';
+            image.style.opacity = 0;
+            text.style.opacity = 0;
+
+            if (idx === i) {
+              item.classList.add('active');
+
+              void image.offsetWidth;
+              void text.offsetWidth;
+
+              text.style.animation = 'fadeInTop 1s ease forwards';
+              text.style.animationDelay = '0.3s';
+
+              image.style.animation = 'fadeInBottom 1s ease forwards';
+              image.style.animationDelay = '1s';
+
+              createFallingCircles(text);
+            }
+          });
+        }
+
+        setInterval(() => {
+          index = (index + 1) % items.length;
+          showItem(index);
+        }, 4500);
+      </script>
+  </div>
+
+  <h1 style="text-align: center;">___***About Us***___</h1>
+
+  <div class="About_us">
+
+
+    <div class="para">
+      <h2>
+        <p>At,
+        <div class="typewriter">
+          <h3 style="color: blueviolet;">Astro Animation Studio..,</h3>
+        </div>we craft visual stories that inspire, imagining and innovating at the edge of animation. With a deep
+        passion
+        and seasoned expertise, our team transforms raw ideas into stunning 2D and 3D animated experiences that
+        captivate
+        and engage. Whether it's character creation or immersive storytelling, we specialize in turning visions into
+        vibrant realities.
+
+        Driven by a pursuit of excellence, we view each project as a canvas for creative exploration. By blending art
+        with
+        cutting-edge technology, we deliver animations that not only look beautiful but also connect deeply with
+        audiences.
+
+        Step into a world where imagination leads the way and every frame tells a story. At Astro Animation Studio,
+        we're
+        not just animating—we’re redefining what animation can be.
+
+        Thank you for being part of our journey. Together, let’s bring the extraordinary to life.</p>
+      </h2>
+    </div>
+
+    <div class="santa">
+      <img src="/images/group-elves-working-santa-s-workshop.png" alt="" width="650px">
+    </div>
+
+  </div>
+
+
+  <div class="services">
+
+    <h3>______*** Services ***______</h3>
+    <h2>What we do</h2>
+    <br><br><br>
+
+    <div class="grid-container">
+      <div class="grid-item">
+        <img src="/images/Design, Animation & Videos.jpg" alt="Image 1">
+        <div class="grid-content">
+          <h3>Design, Animation & Videos</h3>
+          <p>Astro's creative fusion of tech and art crafts captivating 2D/3D animations, motion graphics,
+            illustrations, and interactive storyboards, enhancing brand communication and creating dynamic movie
+            experiences with innovative designs</p>
+        </div>
+      </div>
+      <div class="grid-item">
+        <img src="/images/e learning.jpg" alt="Image 2">
+        <div class="grid-content">
+          <h3>E-Learning Solutions</h3>
+          <p>Empowering education with dynamic e-learning solutions, featuring engaging K-12 videos. Our platform offers
+            role-based access, detailed reporting, and personalized learning journeys, revolutionizing organizational
+            education delivery</p>
+        </div>
+      </div>
+      <div class="grid-item">
+        <img src="/images/html.png" alt="Image 3">
+        <div class="grid-content">
+          <h3>Animate CC (Gaming)to HTML5 Conversion</h3>
+          <p>Embracing the dynamic shift in technological landscapes, our team specializes in the swift and seamless
+            conversion of Animate CC to HTML5, a pivotal step in ensuring unfettered accessibility and heightened
+            interactivity.</p>
+        </div>
+      </div>
+      <div class="grid-item">
+        <img src="/images/lms.png" alt="Image 4">
+        <div class="grid-content">
+          <h3>LMS(Learning Management System)</h3>
+          <p>Empowering through impactful e-learning, we specialize in engaging multimedia content, role-specific
+            access, and robust reporting. Our seasoned team ensures seamless LMS deployment</p>
+        </div>
+      </div>
+    </div>
+    <br><br><br>
+
+    <div class="services">
+
+      <h3>______*** Gallery ***______</h3>
+      <h2>Our Show-Case</h2>
+
+    </div>
+
+    <div id="regForm" class="form-panel">
+      <div class="close-btn" onclick="closeForm()">✖</div>
+      <!-- Contact Section -->
+      <section id="contact" class="contact-section" width="250px">
+
+        <h2>Contact Us</h2>
+
+        <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+        <form action="#" method="post">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+
+          <label for="text">phone number</label>
+          <input type="text" id="text" name="text" required>
+
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+
+
+
+          <button type="submit">Send Message</button>
+
+
+        </form>
+      </section>
+    </div>
+
+
+
+</body>
+
+</html>
