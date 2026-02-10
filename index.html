@@ -60,7 +60,7 @@
             display: flex;
             justify-content: space-between;
             padding: 18px 10px;
-            background: rgba(0, 0, 0, .4);
+            background: rgb(0, 0, 0);
             backdrop-filter: blur(10px);
             z-index: 999;
         }
@@ -82,8 +82,8 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            background:black;
-                
+            background: black;
+
         }
 
         .hero h1 {
@@ -265,13 +265,16 @@
             transform: translateY(0);
         }
 
-        /* HERO SLIDER */
+
+
+        /* HERO */
         .hero {
+            height: 100vh;
             position: relative;
             overflow: hidden;
-
         }
 
+        /* SLIDER */
         .hero-slider {
             position: absolute;
             width: 100%;
@@ -284,50 +287,291 @@
             height: 100%;
             opacity: 0;
             transition: 1.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            padding: 0 80px;
         }
 
+        /* IMAGE LEFT */
         .slide img {
-            width: 65%;
-            height: 65%;
-            object-fit: cover;
-            filter: brightness(.4);
+            width: 45%;
+            height: 60%;
+            object-fit: contain;
+            filter: brightness(1.2);
+            backdrop-filter: 0.5;
+
         }
 
+        /* TEXT RIGHT */
         .slide-text {
-            position: absolute;
-            top: 75%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
+            width: 50%;
         }
 
         .slide-text h1 {
-            font-size: 70px;
+            font-size: 40px;
+            padding-right: 70px;
             background: linear-gradient(90deg, #a855f7, #06b6d4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: fadeUp 1s;
         }
 
         .slide-text p {
-            font-size: 22px;
-            animation: fadeUp 1.5s;
+            font-size: 20px;
+            padding-right: 70px;
         }
 
         .slide.active {
-            opacity: 1;
+            opacity: 1
+        }
+
+        /* MOBILE */
+        @media(max-width:768px) {
+            .slide {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .slide img {
+                width: 80%;
+                height: auto
+            }
+
+            .slide-text {
+                width: 100%
+            }
+
+            .slide-text h1 {
+                font-size: 36px
+            }
+        }
+
+        /* SECTION */
+        .team-section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .team-section h2 {
+            font-size: 40px;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+        }
+
+        /* GRID */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        /* CARD */
+        .team-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 16px;
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+
+            /* animation */
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1s forwards;
+        }
+
+        .team-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .team-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .team-card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .team-card:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .team-card:nth-child(5) {
+            animation-delay: 1s;
         }
 
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -30%)
-            }
-
             to {
                 opacity: 1;
-                transform: translate(-50%, -50%)
+                transform: translateY(0);
             }
+        }
+
+        /* FLOAT EFFECT */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* IMAGE */
+        .team-card img {
+            width: 120px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid #00f0ff;
+            margin-bottom: 15px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* HOVER */
+        .team-card:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 0 25px #00f0ff;
+        }
+
+        /* NAME */
+        .team-card h3 {
+            margin: 8px 0 4px;
+            font-size: 18px;
+        }
+
+        /* ROLE */
+        .team-card p {
+            margin: 0;
+            font-size: 14px;
+            color: #00f0ff;
+        }
+
+        /* MOBILE */
+        @media(max-width:600px) {
+            .team-section h2 {
+                font-size: 28px;
+            }
+        }
+
+        /* social media */
+
+        .social-fixed {
+            position: fixed;
+            right: -80px;
+            /* hidden */
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            z-index: 9999;
+            transition: 0.4s;
+        }
+
+        /* show state */
+        .social-fixed.show {
+            right: 15px;
+        }
+
+        .social-fixed a {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111;
+            border-radius: 50%;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .social-fixed img {
+            width: 26px;
+            height: 26px;
+        }
+
+        .social-fixed a:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 15px #00f0ff;
+        }
+
+        /* mobile */
+        @media(max-width:600px) {
+            .social-fixed {
+                right: 10px;
+            }
+
+            .social-fixed a {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+
+        .elearning h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        /* TYPEWRITER */
+        .type-box {
+            font-size: 22px;
+            color: #00eaff;
+            margin-bottom: 40px;
+            height: 30px;
+            text-align: center;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        /* BULLETS */
+        .points {
+            list-style: none;
+            padding: 0;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        .points li {
+            background: #111;
+            margin: 10px 0;
+            padding: 14px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .points li:hover {
+            background: #00eaff;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        /* QUOTE */
+        .quote-box {
+            font-size: 20px;
+            color: #ffc400;
+            margin-top: 30px;
+            min-height: 40px;
+            text-align: center;
         }
     </style>
 </head>
@@ -349,7 +593,8 @@
             <a href="#about">About</a>
             <a href="#services">Services</a>
             <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
+            <a href="#contact" id="contactBtn">Contact</a>
+
         </div>
     </div>
 
@@ -360,7 +605,7 @@
         <div class="hero-slider">
 
             <div class="slide active">
-                <img src="/images/astro.png ">
+                <img src="/black and white images/captivate.png " style="filter: 50%;">
                 <div class="slide-text">
                     <h1>We turn concepts into captivating animated realities</h1>
                     <p>Highlights how raw ideas are shaped into engaging, narrative-driven animations</p>
@@ -368,7 +613,7 @@
             </div>
 
             <div class="slide">
-                <img src="/images/captivate.png">
+                <img src="/black and white images/astro.png">
                 <div class="slide-text">
                     <h1>Elevate your brand with Astro Animation Studio</h1>
                     <p>Emphasizes the journey from imagination to animated output, with a personal touch</p>
@@ -376,7 +621,7 @@
             </div>
 
             <div class="slide">
-                <img src="/images/transform wonders.png">
+                <img src="/black and white images/transform wonders.png">
                 <div class="slide-text">
                     <h1>Transform ideas into animated wonders</h1>
                     <p>Direct and emotional, this line focuses on the magical aspect of animation</p>
@@ -384,7 +629,7 @@
             </div>
 
             <div class="slide">
-                <img src="/images/framebyframe.png">
+                <img src="/black and white images/framebyframe.png">
                 <div class="slide-text">
                     <h1>Animating dreams into reality, frame by frame</h1>
                     <p>Focuses on both the technical and emotional impact of animated work</p>
@@ -486,7 +731,88 @@
         </div>
     </section>
 
-    <!-- CONTACT -->
+    <!-- ===== E-LEARNING SECTION ===== -->
+    <section class="elearning">
+
+
+        <!-- TYPEWRITER TEXT -->
+        <div class="type-box">
+            <span id="typeText"></span><span class="cursor">|</span>
+        </div>
+
+
+    </section>
+
+
+    <!-- team section-->
+
+
+    <section class="team-section">
+        <h2>Our Creative Team</h2>
+
+        <div class="team-grid">
+
+            <div class="team-card">
+                <img src="images/ceo.jpg">
+                <h3>Jayaseelan</h3>
+                <p>CEO & Managing Director</p>
+            </div>
+
+            <div class="team-card">
+                <img src="images/senior.jpg">
+                <h3>Ravi shankar</h3>
+                <p>Senior Graphic Designer & 3D Artist</p>
+            </div>
+
+            <div class="team-card">
+                <img src="images/multimedia.jpg">
+                <h3>Jayaseelan</h3>
+                <p>2D animator & motion Graphics Designer, e-Learning Developer</p>
+            </div>
+
+            <div class="team-card">
+                <img src="images/3d.jpg">
+                <h3>Vignesh</h3>
+                <p>UI/UX Designer & frontend developer</p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- QUOTE ROTATOR -->
+    <div class="quote-box">
+        <p id="quote"></p>
+    </div>
+
+
+
+
+
+    <!-- ===== FLOATING SOCIAL CONTACT ===== -->
+    <div class="social-fixed">
+
+        <a href="https://wa.me/918675280561" target="_blank" class="social-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+        </a>
+
+        <a href="mailto:info@astroanimationstudio.com" class="social-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png">
+        </a>
+
+        <a href="https://instagram.com" target="_blank" class="social-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+        </a>
+
+        <a href="https://www.youtube.com/@LearnWithJB-x9r" target="_blank" class="social-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+        </a>
+
+    </div>
+
+
+
+    <!-- CONTACT 
     <section id="contact">
         <h2 class="reveal">Contact</h2>
         <form class="reveal">
@@ -495,9 +821,11 @@
             <textarea placeholder="Message"></textarea>
             <button>Send</button>
         </form>
-    </section>
+    </section>-->
 
-    <a href="https://wa.me/918675280561" class="whatsapp">href =""</a>
+
+
+
 
     <script>
         /* LOADER */
@@ -527,25 +855,86 @@
 
         window.addEventListener("scroll", reveal);
 
-        /* HERO FADE SLIDER */
         const slides = document.querySelectorAll(".slide");
         let index = 0;
-
         setInterval(() => {
             slides[index].classList.remove("active");
             index = (index + 1) % slides.length;
             slides[index].classList.add("active");
         }, 4000);
+
+
+        // social media icon
+
+        const contactBtn = document.getElementById("contactBtn");
+        const socialBar = document.querySelector(".social-fixed");
+
+        contactBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            socialBar.classList.toggle("show");
+        });
+
+        // close when clicking anywhere
+        document.addEventListener("click", function (e) {
+            if (!socialBar.contains(e.target) && e.target !== contactBtn) {
+                socialBar.classList.remove("show");
+            }
+        });
+
+        // TYPEWRITER TEXTS
+        const texts = [
+            "Smart Learning for Smart People",
+            "Upgrade Skills with Animation",
+            "Modern Digital Education",
+            "Learn Anytime, Anywhere"
+        ];
+
+        let i = 0;
+        let j = 0;
+        let current = "";
+        let isDeleting = false;
+
+        function typeEffect() {
+            current = texts[i];
+
+            if (!isDeleting) {
+                document.getElementById("typeText").textContent = current.slice(0, ++j);
+                if (j === current.length) {
+                    isDeleting = true;
+                    setTimeout(typeEffect, 1200);
+                    return;
+                }
+            } else {
+                document.getElementById("typeText").textContent = current.slice(0, --j);
+                if (j === 0) {
+                    isDeleting = false;
+                    i = (i + 1) % texts.length;
+                }
+            }
+            setTimeout(typeEffect, 80);
+        }
+        typeEffect();
+
+
+        // QUOTES
+        const quotes = [
+            "Education is the passport to the future.",
+            "Learning never exhausts the mind.",
+            "Digital learning is the future of education.",
+            "Knowledge is power.",
+            "Invest in learning, it pays forever."
+        ];
+
+        let q = 0;
+        function changeQuote() {
+            document.getElementById("quote").textContent = quotes[q];
+            q = (q + 1) % quotes.length;
+        }
+        setInterval(changeQuote, 1500);
+        changeQuote();
+
     </script>
 
 </body>
 
 </html>
-
-
-
-
-
-
-
-
