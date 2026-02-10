@@ -102,6 +102,8 @@
             padding: 120px 20px
         }
 
+
+
         h2 {
             text-align: center;
             font-size: 40px;
@@ -573,6 +575,153 @@
             min-height: 40px;
             text-align: center;
         }
+
+        /* title rec */
+
+        /* ===== H2 SKETCH RECTANGLE ===== */
+        h2 {
+            display: inline-block;
+            position: relative;
+            padding: 12px 28px;
+            color: #000;
+            z-index: 1;
+            margin: 0 auto 60px auto;
+        }
+
+        /* yellow sketch box */
+        h2::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: #ffd000;
+            z-index: -1;
+            border: 2px solid #000;
+            transform: rotate(-1.5deg);
+            transition: .4s;
+        }
+
+        /* hand-drawn extra line */
+        h2::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border: 2px dashed #000;
+            transform: rotate(1.5deg);
+            opacity: .4;
+            z-index: -1;
+            transition: .4s;
+        }
+
+        /* hover animation */
+        h2:hover::before {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        h2:hover::after {
+            transform: rotate(0deg) scale(1.05);
+            opacity: .7;
+        }
+
+        /* center align */
+        section h2 {
+            display: block;
+            width: fit-content;
+            text-align: center;
+        }
+
+        /* footer details */
+
+        .footer {
+            background: #0b0f14;
+            color: #ffffff;
+            padding: 40px 60px 20px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            border-bottom: 1px solid #2a2f36;
+            padding-bottom: 30px;
+        }
+
+        .footer-left .ready {
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        .footer-left h2 {
+            color: #ff00ff;
+            font-size: 36px;
+            margin: 10px 0;
+        }
+
+        .footer-left .phone {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 60px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+            color: #cfd3d6;
+            cursor: pointer;
+        }
+
+        .footer-links li:hover {
+            color: #ffa500;
+        }
+
+        .footer-right {
+            max-width: 300px;
+        }
+
+        .footer-right .logo {
+            width: 120px;
+            margin-bottom: 15px;
+        }
+
+        .footer-right p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #cfd3d6;
+        }
+
+        .footer-right .contact {
+            margin-top: 15px;
+        }
+
+        .footer-right i {
+            margin-right: 8px;
+            color: #ffa500;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 15px;
+            font-size: 14px;
+            color: #cfd3d6;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .footer-top {
+                flex-direction: column;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -605,7 +754,7 @@
         <div class="hero-slider">
 
             <div class="slide active">
-                <img src="/images/captivate.png " style="filter: 50%;">
+                <img src="/black and white images/captivate.png " style="filter: 50%;">
                 <div class="slide-text">
                     <h1>We turn concepts into captivating animated realities</h1>
                     <p>Highlights how raw ideas are shaped into engaging, narrative-driven animations</p>
@@ -613,7 +762,7 @@
             </div>
 
             <div class="slide">
-                <img src="/images/astro.png">
+                <img src="/black and white images/astro.png">
                 <div class="slide-text">
                     <h1>Elevate your brand with Astro Animation Studio</h1>
                     <p>Emphasizes the journey from imagination to animated output, with a personal touch</p>
@@ -621,7 +770,7 @@
             </div>
 
             <div class="slide">
-                <img src="/images/transform wonders.png">
+                <img src="/black and white images/transform wonders.png">
                 <div class="slide-text">
                     <h1>Transform ideas into animated wonders</h1>
                     <p>Direct and emotional, this line focuses on the magical aspect of animation</p>
@@ -629,7 +778,7 @@
             </div>
 
             <div class="slide">
-                <img src="/images/framebyframe.png">
+                <img src="/black and white images/framebyframe.png">
                 <div class="slide-text">
                     <h1>Animating dreams into reality, frame by frame</h1>
                     <p>Focuses on both the technical and emotional impact of animated work</p>
@@ -753,13 +902,13 @@
         <div class="team-grid">
 
             <div class="team-card">
-                <img src="images/ceo.jpg">
+                <img src="/images/.jpg">
                 <h3>Jayaseelan</h3>
                 <p>CEO & Managing Director</p>
             </div>
 
             <div class="team-card">
-                <img src="images/senior.jpg">
+                <img src="/images/ravi shankar.jpg">
                 <h3>Ravi shankar</h3>
                 <p>Senior Graphic Designer & 3D Artist</p>
             </div>
@@ -824,6 +973,54 @@
     </section>-->
 
 
+    <!-- footer details -->
+
+
+    <footer class="footer">
+        <div class="footer-top">
+
+            <!-- Left Section -->
+            <div class="footer-left">
+                <p class="ready">Let’s Work Together</p>
+                <h2>Connect With Us</h2>
+                <p class="phone">+918675280561</p>
+            </div>
+            <h3 style="padding-top: 5%;">Astro Animation Studio</h3>
+            <!-- Middle Links -->
+            <!-- <div class="footer-links">
+                <ul>
+                    <li><a href="/#Home">Home</a></li>
+                    <li><a href="/#About Us">About Us</a></li>
+                    <li><a href="/#Services">Services</a></li>
+                    <li><a href="/#Projects">Projects</a></li>
+                </ul>
+               <ul>
+                    <li>Animation & Videos</li>
+                    <li>E-Learning Solution</li>
+                    <li>Flash to HTML5</li>
+                    <li>LMS</li>
+                </ul>
+            </div>-->
+
+            <!-- Right Section -->
+            <div class="footer-right">
+                <img src="logo.png" alt="logo" class="logo">
+                <p>
+                    Astro delivers forward-thinking solutions that push boundaries and create impact.
+                </p>
+
+                <div class="contact">
+                    <p><i class="fa-solid fa-envelope"></i> info@astroanimationstudio.com</p>
+                    <p><i class="fa-solid fa-globe"></i> www.astroanimationstudio.com</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>Copyright © 2026 Astro animation studio. All Rights Reserved.</p>
+        </div>
+    </footer>
 
 
 
@@ -938,4 +1135,3 @@
 </body>
 
 </html>
-
