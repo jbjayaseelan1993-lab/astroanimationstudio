@@ -723,6 +723,95 @@
                 gap: 20px;
             }
         }
+
+        /* SECTION */
+        .clients-section {
+            padding: 80px 8%;
+            background: #000;
+            overflow: hidden;
+        }
+
+        /* SMALL TITLE */
+        .small-title {
+            color: #00e676;
+            font-weight: 600;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .small-title::before {
+            content: "";
+            width: 50px;
+            height: 3px;
+            background: #00e676;
+        }
+
+        /* MAIN TITLE */
+        .main-title {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 50px;
+        }
+
+        /* WRAPPER */
+        .client-wrapper {
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* TRACK */
+        .client-logos {
+            display: flex;
+            gap: 30px;
+            width: max-content;
+            animation: scroll 25s linear infinite;
+        }
+
+        .client-wrapper:hover .client-logos {
+            animation-play-state: paused;
+        }
+
+        /* LOGO BOX */
+        .logo-box {
+            min-width: 220px;
+            height: 110px;
+            border: 1px solid #00e676;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111;
+            border-radius: 8px;
+
+        }
+
+        .logo-box:hover {
+
+            box-shadow: 0 0 15px #00e676;
+        }
+
+        .logo-box img {
+            max-width: 250px;
+            max-height: 120px;
+
+            opacity: 1;
+        }
+
+        .logo-box:hover img {
+
+            opacity: 1;
+        }
+
+
+
+        /* MOBILE */
+        @media(max-width:768px) {
+            .main-title {
+                font-size: 28px;
+            }
+        }
     </style>
 </head>
 
@@ -943,6 +1032,24 @@
         <p id="quote"></p>
     </div>
 
+    <section class="clients-section">
+
+        <div class="small-title">OUR CLIENTS</div>
+        <div class="main-title">Our Valuable Clients</div>
+
+        <div class="client-wrapper">
+
+            <div class="client-logos">
+
+                <!-- ORIGINAL -->
+                <div class="logo-box"><img src="images/sne Logo.png"></div>
+
+                <!-- DUPLICATE FOR INFINITE -->
+
+            </div>
+        </div>
+
+    </section>
 
 
 
