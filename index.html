@@ -193,7 +193,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #a855f7;
+            background: #55f7e4;
             pointer-events: none;
             mix-blend-mode: screen;
             z-index: 9999;
@@ -212,60 +212,36 @@
         }
 
         /* SERVICE IMAGE CARD */
+
+
         .service-card {
-            position: relative;
-            overflow: hidden;
             padding: 0;
+            overflow: hidden;
         }
 
         .service-card img {
             width: 100%;
             height: 260px;
             object-fit: cover;
-            display: block;
-            transition: 0.6s;
+            border-radius: 16px 16px 0 0;
         }
 
-        /* overlay */
-        .overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(0, 0, 0, .9), rgba(0, 0, 0, .2));
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: 0.5s;
+        .service-content {
             padding: 20px;
         }
 
-        .overlay h3 {
-            margin: 0;
-            font-size: 22px;
-            color: #fff;
+        .service-content h3 {
+            margin: 10px 0;
+            font-size: 20px;
+            color: #00eaff;
         }
 
-        .overlay p {
+        .service-content p {
             font-size: 14px;
-            opacity: .9;
+            line-height: 1.6;
+            color: #ddd;
         }
 
-        /* hover effect */
-        .service-card:hover img {
-            transform: scale(1.1);
-            filter: brightness(.5);
-        }
-
-        .service-card:hover .overlay {
-            opacity: 1;
-            transform: translateY(0);
-        }
 
 
 
@@ -812,10 +788,111 @@
                 font-size: 28px;
             }
         }
+
+        /* ===== OFFER BOX ===== */
+        .offer-box {
+            position: fixed;
+            top: 40%;
+            right: 0;
+            background: linear-gradient(45deg, #ff0040, #ff9900);
+            padding: 15px 20px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px 0 0 10px;
+            z-index: 9999;
+            animation: blinkOffer 1s infinite;
+            transition: 0.4s;
+        }
+
+        @keyframes blinkOffer {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .offer-box:hover {
+            animation: none;
+            /* stop blinking */
+            width: 280px;
+        }
+
+        .offer-details {
+            display: none;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .offer-box:hover .offer-details {
+            display: block;
+        }
+
+        /* CLOSE BUTTON */
+        .offer-close {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            background: #000;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        .offer-close:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* SMOOTH ZOOM ANIMATION */
+        @keyframes smoothZoom {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .service-card img {
+
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .service-card {
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        /* HOVER EFFECT */
+        .service-card:hover img {
+            transform: scale(1.12);
+        }
     </style>
 </head>
 
 <body>
+
+
+
+
 
     <!-- LOADER -->
     <div id="loader">
@@ -913,7 +990,7 @@
 
             <div class="card reveal service-card">
                 <img src="/images/Design, Animation & Videos.jpg">
-                <div class="overlay">
+                <div class="service-content">
                     <h3>Design, Animation & Videos</h3>
                     <p>Astro's creative fusion of tech and art crafts captivating 2D/3D animations, motion graphics,
                         illustrations, and interactive storyboards, enhancing brand communication and creating dynamic
@@ -924,7 +1001,7 @@
 
             <div class="card reveal service-card">
                 <img src="/images/e learning.jpg">
-                <div class="overlay">
+                <div class="service-content">
                     <h3>E-Learning Solutions</h3>
                     <p>Empowering education with dynamic e-learning solutions, featuring engaging K-12 videos. Our
                         platform offers
@@ -936,7 +1013,7 @@
 
             <div class="card reveal service-card">
                 <img src="/images/html.jpg">
-                <div class="overlay">
+                <div class="service-content">
                     <h3>Animate CC to HTML5 Conversion (Interactive)</h3>
                     <p>Embracing the dynamic shift in technological landscapes, our team specializes in the swift and
                         seamless
@@ -948,7 +1025,7 @@
 
             <div class="card reveal service-card">
                 <img src="/images/lms.jpg">
-                <div class="overlay">
+                <div class="service-content">
                     <h3>LMS(Learning Management System)</h3>
                     <p>Empowering through impactful e-learning, we specialize in engaging multimedia content,
                         role-specific
@@ -968,7 +1045,6 @@
             <iframe src="https://www.youtube.com/embed/09zN3__Y9G8" allowfullscreen></iframe>
             <iframe src="https://www.youtube.com/embed/Kpbz3dWjbMc" allowfullscreen></iframe>
             <iframe src="https://www.youtube.com/embed/4cP9F81O-aE" allowfullscreen></iframe>
-            <iframe src="https://www.youtube.com/embed/fOZIEWJTepo" allowfullscreen></iframe>
         </div>
     </section>
 
@@ -1052,7 +1128,21 @@
 
     </section>
 
+    <!-- ===== offer section ===== -->
 
+    <!-- OFFER SECTION -->
+    <div class="offer-box" id="offerBox">
+
+        <span class="offer-close" id="offerClose">✖</span>
+
+        🎉 Special Offer!
+
+        <div class="offer-details">
+            Get 20% Discount on 2D Explainer Videos <br><br>
+            Limited Time Offer! <br>
+            Contact Now: +91 8675280561
+        </div>
+    </div>
 
 
     <!-- ===== FLOATING SOCIAL CONTACT ===== -->
@@ -1248,9 +1338,16 @@
         setInterval(changeQuote, 1500);
         changeQuote();
 
+        // OFFER CLOSE FUNCTION
+        const offerBox = document.getElementById("offerBox");
+        const offerClose = document.getElementById("offerClose");
+
+        offerClose.addEventListener("click", function () {
+            offerBox.style.display = "none";
+        });
+
     </script>
 
 </body>
 
 </html>
-
