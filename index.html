@@ -936,9 +936,22 @@
 
         // contact button toggles social highlight (optional) – just keep
         document.getElementById('contactBtn').addEventListener('click', (e) => { e.preventDefault(); document.querySelector('.social-dock').style.opacity = '0.5'; setTimeout(() => document.querySelector('.social-dock').style.opacity = '1', 300); });
+
+
+        <!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-Z974SPT367');
+</script>
+
     </script>
 </body>
 
 </html>
+
 
 
