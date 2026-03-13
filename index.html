@@ -824,7 +824,11 @@
             <div class="interactive-card" onclick="openInteractive()"><i class="fas fa-cube"></i><span>HTML Interactive
                     Project</span><small style="color:#7f8c8d;">click to explore</small></div>
 
-
+                <div class="interactive-card" onclick="openInteractive2()">
+                <i class="fas fa-vr-cardboard"></i>
+                <span>Short demo for SNE</span>
+                <small style="color:#7f8c8d;">click to explore</small>
+            </div>
             
 
 
@@ -835,6 +839,20 @@
 
 
     </section>
+
+<!-- for sne html tag -->
+  <div id="interactiveModal2" class="interactive-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeInteractive2()">&times;</span>
+
+            <iframe style="width:100%; height:100%;" src="/sne/Untitled-1.html">
+            </iframe>
+
+        </div>
+    </div>
+
+
+    
 
 
     <!-- typewriter + quote block (international education vibe) -->
@@ -959,6 +977,14 @@
         // contact button toggles social highlight (optional) – just keep
         document.getElementById('contactBtn').addEventListener('click', (e) => { e.preventDefault(); document.querySelector('.social-dock').style.opacity = '0.5'; setTimeout(() => document.querySelector('.social-dock').style.opacity = '1', 300); });
 
+// interactive element for sne
+        function openInteractive2() {
+            document.getElementById("interactiveModal2").style.display = "flex";
+        }
+
+        function closeInteractive2() {
+            document.getElementById("interactiveModal2").style.display = "none";
+        }
 
 
 
@@ -966,6 +992,7 @@
 </body>
 
 </html>
+
 
 
 
