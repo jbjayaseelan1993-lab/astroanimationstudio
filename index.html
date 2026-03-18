@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
@@ -9,6 +10,7 @@
 
     gtag('config', 'G-Z974SPT367');
 </script>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +22,7 @@
 
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="shortcut icon" href="favicon.png">
-    
+
     <style>
         * {
             margin: 0;
@@ -147,6 +149,8 @@
             position: relative;
             overflow: hidden;
             background: #08080c;
+            /*background-image: url(/images/beautyback.jpg);*/
+
         }
 
         .hero-slider {
@@ -667,34 +671,55 @@
                 gap: 1rem;
             }
         }
+
+        /* about section */
+        #typewriter {
+            border-right: 3px solid #fff;
+            padding-right: 5px;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            0% {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: white;
+            }
+
+            100% {
+                border-color: transparent;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div id="loader">
         <div class="loader-svg"></div>
-        <div class="loader-text">ASTRO·ANIMATION STUDIO</div>
+        <div class="loader-text">ASTRO ANIMATION STUDIO</div>
     </div>
 
     <!-- floating social dock (always visible) -->
     <div class="social-dock">
-        <a href="https://wa.me/918524031848" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://wa.me/918675280561" target="_blank"><i class="fab fa-whatsapp"></i></a>
         <a href="mailto:info@astroanimationstudio.com"><i class="far fa-envelope"></i></a>
         <a href="https://www.instagram.com/astroaniamtionstudious?utm_source=qr&igsh=MXFjemczamN4eGNhbg%3D%3D"
             target="_blank"><i class="fab fa-instagram"></i></a>
         <a href="https://www.youtube.com/@LearnWithJB-x9r" target="_blank"><i class="fab fa-youtube"></i></a>
     </div>
 
-    <!-- offer float 
+    <!-- offer float -->
     <div class="offer-float" id="offerFloat">
         <span class="badge">-20%</span>
         <span class="offer-text">2D explainer video</span>
         <span class="offer-close" id="offerClose"><i class="fas fa-times"></i></span>
-    </div>-->
+    </div>
 
     <!-- navbar -->
     <div class="navbar">
-        <div class="logo">✦ ASTRO ANIMATION STUDIO</div>
+        <div class="logo">✦ ASTRO ANIMATION</div>
         <div class="nav-links">
             <a href="#home">Home</a>
             <a href="#about">About</a>
@@ -737,25 +762,8 @@
     <!-- ABOUT -->
     <section id="about">
         <h2 class="section-title"><span>About</span> us</h2>
-        <div class="about-text"> we craft visual stories that inspire, imagining and innovating at the edge of
-            animation. With a deep
-            passion
-            and seasoned expertise, our team transforms raw ideas into stunning 2D and 3D animated experiences that
-            captivate
-            and engage. Whether it's character creation or immersive storytelling, we specialize in turning visions into
-            vibrant realities.
-
-            Driven by a pursuit of excellence, we view each project as a canvas for creative exploration. By blending
-            art
-            with
-            cutting-edge technology, we deliver animations that not only look beautiful but also connect deeply with
-            audiences.
-
-            Step into a world where imagination leads the way and every frame tells a story. At Astro Animation Studio,
-            we're
-            not just animating—we’re redefining what animation can be.
-
-            Thank you for being part of our journey. Together, let’s bring the extraordinary to life.✦</div>
+        <div class="about-text">
+            <p id="typewriter"></p>
     </section>
 
     <!-- SERVICES (original image paths) -->
@@ -803,10 +811,10 @@
     </section>
 
     <!-- PROJECTS + video grid + interactive (original youtube IDs kept) -->
- <section id="projects">
+    <section id="projects">
         <h2 class="section-title"><span>Projects</span></h2>
         <div class="youtube-grid">
-            
+
             <div class="video-card"><iframe src="https://www.youtube.com/embed/8u5ZZW1Yec8" allowfullscreen></iframe>
             </div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/h3wKmHfDtjY" allowfullscreen></iframe>
@@ -821,31 +829,25 @@
             </div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/fOZIEWJTepo" allowfullscreen></iframe>
             </div>
-            <div class="interactive-card" onclick="openInteractive()"><i class="fas fa-cube"></i><span>HTML Interactive
-                    Project</span><small style="color:#7f8c8d;">click to explore</small></div>
 
-                <div class="interactive-card" onclick="openInteractive2()">
+            <div class="interactive-card" onclick="openInteractive()"><i class="fas fa-cube"></i><span>HTML Interactive
+                    Project</span><small style="color:#7f8c8d;">click to explore</small>
+            </div>
+
+            <div class="interactive-card" onclick="openInteractive2()">
                 <i class="fas fa-vr-cardboard"></i>
                 <span>Short demo for SNE</span>
                 <small style="color:#7f8c8d;">click to explore</small>
             </div>
-            
-  <!-- interactive modal (iframe pointing to original path) -->
-    <div id="interactiveModal" class="interactive-modal">
-        <div class="modal-content"><span class="modal-close" onclick="closeInteractive()">&times;</span><iframe
-                style="width:100%; height:100%;" src="/interactive/3.32.3.v2.html"></iframe></div>
-    </div>
 
-            
-            </div>
-
+        </div>
 
 
 
     </section>
 
-<!-- for sne html tag -->
-  <div id="interactiveModal2" class="interactive-modal">
+
+    <div id="interactiveModal2" class="interactive-modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeInteractive2()">&times;</span>
 
@@ -855,8 +857,6 @@
         </div>
     </div>
 
- 
-    
 
 
     <!-- typewriter + quote block (international education vibe) -->
@@ -913,7 +913,7 @@
             <div>
                 <div class="footer-logo">ASTRO animation</div>
                 <p style="color:#94a3b8;">Storytelling through motion.<br>Based in India, serving worldwide.</p>
-                <div style="margin: 1.5rem 0;"><i class="fas fa-phone-alt"></i> +91 8524031848</div>
+                <div style="margin: 1.5rem 0;"><i class="fas fa-phone-alt"></i> +91 86752 80561</div>
             </div>
             <div>
                 <h4 style="margin-bottom:1rem;">Explore</h4>
@@ -935,9 +935,16 @@
             reserved.</div>
     </footer>
 
- 
+    <!-- interactive modal (iframe pointing to original path) -->
 
-    
+
+    <div id="interactiveModal" class="interactive-modal">
+        <div class="modal-content"><span class="modal-close" onclick="closeInteractive()">&times;</span><iframe
+                style="width:100%; height:100%;" src="/interactive/3.32.3.v2.html"></iframe></div>
+    </div>
+
+
+
 
     <script>
         window.onload = () => { setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1400); };
@@ -977,7 +984,37 @@
         // contact button toggles social highlight (optional) – just keep
         document.getElementById('contactBtn').addEventListener('click', (e) => { e.preventDefault(); document.querySelector('.social-dock').style.opacity = '0.5'; setTimeout(() => document.querySelector('.social-dock').style.opacity = '1', 300); });
 
-// interactive element for sne
+        // for about typewriter
+
+        const aboutTypingText = `We craft visual stories that inspire, imagining and innovating at the edge of animation. With a deep passion and seasoned expertise, our team transforms raw ideas into stunning 2D and 3D animated experiences that captivate and engage. Whether it's character creation or immersive storytelling, we specialize in turning visions into vibrant realities.
+
+Driven by a pursuit of excellence, we view each project as a canvas for creative exploration. By blending art with cutting-edge technology, we deliver animations that not only look beautiful but also connect deeply with audiences.
+
+Step into a world where imagination leads the way and every frame tells a story. At Astro Animation Studio, we're not just animating—we’re redefining what animation can be.
+
+Thank you for being part of our journey. Together, let’s bring the extraordinary to life.✦`;
+
+        let aboutCharIndex = 0;
+        let aboutTypingSpeed = 25;
+
+        function startAboutTyping() {
+
+            if (aboutCharIndex < aboutTypingText.length) {
+
+                document.getElementById("typewriter").innerHTML += aboutTypingText.charAt(aboutCharIndex);
+
+                aboutCharIndex++;
+
+                setTimeout(startAboutTyping, aboutTypingSpeed);
+
+            }
+
+        }
+
+        window.addEventListener("load", startAboutTyping);
+
+
+
         function openInteractive2() {
             document.getElementById("interactiveModal2").style.display = "flex";
         }
@@ -992,17 +1029,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
