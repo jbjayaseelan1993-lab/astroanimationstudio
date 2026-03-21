@@ -908,6 +908,40 @@
             font-weight: 500;
         }
 
+        .field-error {
+            display: none;
+            font-size: 0.8rem;
+            color: #f87171;
+            margin-top: 0.4rem;
+            padding-left: 0.3rem;
+            font-weight: 500;
+            animation: shakeIn 0.3s ease;
+        }
+
+        .field-error.show {
+            display: block;
+        }
+
+        .input-error {
+            border-color: #f87171 !important;
+        }
+
+        @keyframes shakeIn {
+            0% {
+                transform: translateX(-6px);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateX(4px);
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
         /* ── FOOTER ── */
         .footer {
             background: #080a10;
@@ -1469,10 +1503,12 @@
                     <div class="form-group">
                         <label>Your Name</label>
                         <input type="text" id="cf-name" placeholder="John Doe">
+                        <span class="field-error" id="err-name">⚠ Please enter your name</span>
                     </div>
                     <div class="form-group">
                         <label>Email Address</label>
                         <input type="email" id="cf-email" placeholder="john@company.com">
+                        <span class="field-error" id="err-email">⚠ Please enter a valid email</span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -1489,6 +1525,7 @@
                 <div class="form-group">
                     <label>Message</label>
                     <textarea id="cf-message" rows="5" placeholder="Tell us about your project…"></textarea>
+                    <span class="field-error" id="err-message">⚠ Please write your message</span>
                 </div>
                 <button class="submit-btn" onclick="submitForm()">Send Message &nbsp;✦</button>
                 <div class="form-success" id="formSuccess">
@@ -1759,12 +1796,45 @@
             document.head.appendChild(s);
         })();
 
+        function setError(inputId, errId, condition) {
+            const input = document.getElementById(inputId);
+            const err = document.getElementById(errId);
+            if (condition) {
+                input.classList.add('input-error');
+                err.classList.add('show');
+                return true;
+            } else {
+                input.classList.remove('input-error');
+                err.classList.remove('show');
+                return false;
+            }
+        }
+
+        // Clear error on input so user gets instant feedback when they fix it
+        ['cf-name', 'cf-email', 'cf-message'].forEach(id => {
+            document.getElementById(id).addEventListener('input', function () {
+                this.classList.remove('input-error');
+                const errMap = { 'cf-name': 'err-name', 'cf-email': 'err-email', 'cf-message': 'err-message' };
+                document.getElementById(errMap[id]).classList.remove('show');
+            });
+        });
+
         async function submitForm() {
             const name = document.getElementById('cf-name').value.trim();
             const email = document.getElementById('cf-email').value.trim();
             const service = document.getElementById('cf-service').value;
             const message = document.getElementById('cf-message').value.trim();
-            if (!name || !email || !message) { alert('Please fill in your name, email, and message.'); return; }
+
+            const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+            const hasError = [
+                setError('cf-name', 'err-name', !name),
+                setError('cf-email', 'err-email', !email || !emailValid),
+                setError('cf-message', 'err-message', !message)
+            ].some(Boolean);
+
+            if (hasError) return;
+
             const btn = document.querySelector('.submit-btn');
             btn.textContent = 'Sending…'; btn.disabled = true;
             try {
