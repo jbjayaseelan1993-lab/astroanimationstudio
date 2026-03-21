@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Astro Animation | International Studio</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,300;1,9..40,400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="images/favicon.png">
@@ -26,9 +26,8 @@
             --muted: #94a3b8;
             --grad: linear-gradient(135deg, var(--purple), var(--blue));
 
-/* Unified font — DM Sans everywhere */
+            /* Unified font — DM Sans everywhere */
             --font: 'DM Sans', sans-serif;
-            
         }
 
         * {
@@ -41,18 +40,43 @@
             scroll-behavior: smooth;
         }
 
- 
-
-
-
-        
+        /* ── ALL TEXT uses DM Sans ── */
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .logo,
+        .section-title,
+        .stat-num,
+        .service-content h3,
+        .team-member h3,
+        .footer-logo,
+        .footer h4,
+        .typewriter-block,
+        #typeText,
+        .loader-text,
+        .submit-btn,
+        .contact-info h3,
+        .nav-links a,
+        .nav-cta,
+        button,
+        input,
+        select,
+        textarea,
+        label {
+            font-family: var(--font) !important;
+        }
 
         body {
-            font-family: 'DM Sans', sans-serif;
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
         }
 
         ::-webkit-scrollbar {
@@ -116,7 +140,6 @@
 
         .loader-text {
             margin-top: 22px;
-            font-family: 'Syne', sans-serif;
             font-size: 1.1rem;
             font-weight: 700;
             letter-spacing: 4px;
@@ -147,7 +170,6 @@
         }
 
         .logo {
-            font-family: 'Syne', sans-serif;
             font-weight: 800;
             font-size: 1.5rem;
             background: var(--grad);
@@ -196,7 +218,7 @@
             color: #fff !important;
             padding: 0.5rem 1.3rem;
             border-radius: 50px;
-            font-weight: 500 !important;
+            font-weight: 600 !important;
             transition: opacity 0.2s, transform 0.2s !important;
         }
 
@@ -209,7 +231,6 @@
             transform: translateY(-1px) !important;
         }
 
-        /* hamburger */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -247,7 +268,6 @@
             background: #07070b;
         }
 
-        /* star canvas */
         #starCanvas {
             position: absolute;
             inset: 0;
@@ -261,16 +281,18 @@
             z-index: 1;
         }
 
+        /* ── SLIDE layout: fixed 50/50 halves ── */
         .slide {
             position: absolute;
             inset: 0;
             opacity: 0;
-            transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             align-items: center;
-            justify-content: center;
-            gap: 4rem;
-            padding: 0 10%;
+            padding: 0 8%;
+            gap: 0;
+            /* no cross-fade — controlled via JS classes */
+            transition: opacity 0.15s ease;
         }
 
         .slide.active {
@@ -278,51 +300,80 @@
             z-index: 10;
         }
 
+        /* IMAGE half — slides in from left */
+        .slide-img-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+            overflow: hidden;
+        }
+
         .slide img {
-            width: 40%;
-            max-height: 65vh;
+            width: 100%;
+            max-width: 420px;
+            max-height: 60vh;
             object-fit: contain;
             filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.4));
-            animation: floatImage 4s ease-in-out infinite alternate;
+            /* position & opacity fully controlled by JS inline styles */
         }
 
+        /* subtle perpetual float once settled */
         @keyframes floatImage {
-            from {
-                transform: translateY(0) scale(0.98);
+
+            0%,
+            100% {
+                transform: translateY(0px);
             }
 
-            to {
-                transform: translateY(-14px) scale(1.01);
+            50% {
+                transform: translateY(-12px);
             }
         }
 
+        .slide.active.settled img {
+            animation: floatImage 4s ease-in-out infinite;
+        }
+
+        /* TEXT half — fades up */
         .slide-text {
-            width: 50%;
+            padding-left: 5%;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.18s,
+                opacity 0.65s ease 0.18s;
+        }
+
+        .slide.active .slide-text {
+            transform: translateY(0);
+            opacity: 1;
         }
 
         .slide-text h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(2rem, 3.8vw, 3.8rem);
+            font-size: clamp(1.8rem, 3.2vw, 3.2rem);
             font-weight: 800;
-            line-height: 1.15;
+            line-height: 1.18;
             background: linear-gradient(135deg, #ffffff 30%, #c4b5fd);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1.2rem;
+            letter-spacing: -0.02em;
         }
 
         .slide-text p {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
+            font-weight: 400;
             color: var(--muted);
-            max-width: 500px;
+            max-width: 460px;
             border-left: 3px solid var(--purple);
             padding-left: 1.4rem;
+            line-height: 1.7;
         }
 
         /* slider dots */
         .slider-dots {
             position: absolute;
-            bottom: 40px;
+            bottom: 36px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -351,7 +402,6 @@
         }
 
         .section-title {
-            font-family: 'Syne', sans-serif;
             font-size: clamp(2rem, 3vw, 2.8rem);
             font-weight: 700;
             margin-bottom: 3rem;
@@ -388,11 +438,8 @@
         .about-text-block {
             font-size: 1.05rem;
             color: #b0bec5;
-            line-height: 1.85;
-        }
-
-        .about-text-block #typewriter {
-            display: inline;
+            line-height: 1.9;
+            font-weight: 400;
         }
 
         .about-stats {
@@ -417,7 +464,6 @@
         }
 
         .stat-num {
-            font-family: 'Syne', sans-serif;
             font-size: 2.6rem;
             font-weight: 800;
             background: var(--grad);
@@ -429,6 +475,7 @@
             color: var(--muted);
             font-size: 0.9rem;
             margin-top: 0.3rem;
+            font-weight: 400;
         }
 
         /* ── SERVICES ── */
@@ -476,9 +523,8 @@
         }
 
         .service-content h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 600;
+            font-size: 1.25rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
             color: #e2e8f0;
         }
@@ -486,7 +532,8 @@
         .service-content p {
             color: #8898aa;
             font-size: 0.92rem;
-            line-height: 1.7;
+            line-height: 1.75;
+            font-weight: 400;
         }
 
         /* ── PROJECTS ── */
@@ -566,6 +613,7 @@
         .interactive-card small {
             color: #6b7280;
             font-size: 0.8rem;
+            font-weight: 400;
         }
 
         /* ── TYPEWRITER BLOCK ── */
@@ -589,8 +637,7 @@
         }
 
         #typeText {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            font-size: clamp(1.2rem, 2.2vw, 1.7rem);
             font-weight: 600;
             color: #c4b5fd;
         }
@@ -608,11 +655,12 @@
         }
 
         #quote {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #fbbf24;
             font-style: italic;
             margin-top: 1rem;
             min-height: 1.5rem;
+            font-weight: 400;
         }
 
         /* ── TEAM ── */
@@ -655,15 +703,15 @@
         }
 
         .team-member h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.05rem;
+            font-weight: 700;
             color: #fff;
         }
 
         .team-member p {
             color: var(--muted);
             font-size: 0.85rem;
+            font-weight: 400;
         }
 
         /* ── CLIENTS ── */
@@ -675,7 +723,6 @@
         }
 
         .clients-label {
-            font-family: 'Syne', sans-serif;
             font-weight: 600;
             letter-spacing: 2px;
             font-size: 0.85rem;
@@ -732,17 +779,18 @@
         }
 
         .contact-info h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 1rem;
             color: #e2e8f0;
+            line-height: 1.3;
         }
 
         .contact-info p {
             color: var(--muted);
-            line-height: 1.8;
+            line-height: 1.85;
             margin-bottom: 2rem;
+            font-weight: 400;
         }
 
         .contact-detail {
@@ -770,6 +818,7 @@
             color: var(--muted);
             text-decoration: none;
             transition: 0.2s;
+            font-weight: 400;
         }
 
         .contact-detail a:hover {
@@ -800,7 +849,7 @@
             font-weight: 500;
             color: var(--muted);
             margin-bottom: 0.5rem;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         .form-group input,
@@ -812,15 +861,14 @@
             border-radius: 12px;
             padding: 0.85rem 1.1rem;
             color: #e2e8f0;
-            font-family: 'DM Sans', sans-serif;
             font-size: 0.95rem;
+            font-weight: 400;
             transition: border-color 0.2s;
             outline: none;
             resize: none;
         }
 
         .form-group input:focus,
-        .form-group select,
         .form-group textarea:focus {
             border-color: var(--purple);
         }
@@ -841,12 +889,11 @@
             color: #fff;
             border: none;
             border-radius: 14px;
-            font-family: 'Syne', sans-serif;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: opacity 0.2s, transform 0.2s;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         .submit-btn:hover {
@@ -877,7 +924,6 @@
         }
 
         .footer-logo {
-            font-family: 'Syne', sans-serif;
             font-size: 1.8rem;
             font-weight: 800;
             background: var(--grad);
@@ -888,14 +934,15 @@
 
         .footer p {
             color: #7a8899;
-            line-height: 1.7;
+            line-height: 1.75;
+            font-weight: 400;
         }
 
         .footer h4 {
-            font-family: 'Syne', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 1.2rem;
             color: #e2e8f0;
+            font-size: 1rem;
         }
 
         .footer a {
@@ -904,6 +951,7 @@
             transition: 0.2s;
             display: block;
             margin-bottom: 0.6rem;
+            font-weight: 400;
         }
 
         .footer a:hover {
@@ -954,6 +1002,7 @@
             text-align: center;
             color: #4a5568;
             font-size: 0.88rem;
+            font-weight: 400;
         }
 
         /* ── SOCIAL DOCK ── */
@@ -1108,19 +1157,30 @@
                 display: flex;
             }
 
+            /* mobile hero: stack image above text */
             .slide {
-                flex-direction: column;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
                 text-align: center;
-                gap: 1.5rem;
-                padding: 0 6%;
+                padding: 80px 6% 60px;
+                gap: 1rem;
+            }
+
+            .slide-img-wrap {
+                height: 35vh;
             }
 
             .slide img {
-                width: 65%;
+                max-width: 260px;
+                max-height: 32vh;
             }
 
             .slide-text {
-                width: 100%;
+                padding-left: 0;
+            }
+
+            .slide-text p {
+                margin: 0 auto;
             }
 
             .footer-grid {
@@ -1176,7 +1236,6 @@
                 class="fab fa-youtube"></i></a>
     </div>
 
-    <!-- Back to top -->
     <button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
@@ -1202,28 +1261,28 @@
         <canvas id="starCanvas"></canvas>
         <div class="hero-slider" id="heroSlider">
             <div class="slide active">
-                <img src="/images/captivate.png" alt="Captivate">
+                <div class="slide-img-wrap"><img src="/images/captivate.png" alt="Captivate"></div>
                 <div class="slide-text">
                     <h1>We turn concepts into captivating realities</h1>
                     <p>Raw ideas shaped into engaging, narrative-driven animations that move audiences</p>
                 </div>
             </div>
             <div class="slide">
-                <img src="/images/astro.png" alt="Astro">
+                <div class="slide-img-wrap"><img src="/images/astro.png" alt="Astro"></div>
                 <div class="slide-text">
                     <h1>Elevate your brand with Astro</h1>
                     <p>From imagination to animated output — every frame, a personal touch</p>
                 </div>
             </div>
             <div class="slide">
-                <img src="/images/transform wonders.png" alt="Transform">
+                <div class="slide-img-wrap"><img src="/images/transform wonders.png" alt="Transform"></div>
                 <div class="slide-text">
                     <h1>Transform ideas into animated wonders</h1>
                     <p>The magical aspect of animation, brought to life with precision and heart</p>
                 </div>
             </div>
             <div class="slide">
-                <img src="/images/framebyframe.png" alt="Frame by Frame">
+                <div class="slide-img-wrap"><img src="/images/framebyframe.png" alt="Frame by Frame"></div>
                 <div class="slide-text">
                     <h1>Animating dreams into reality, frame by frame</h1>
                     <p>Technical mastery meets emotional storytelling — every frame counts</p>
@@ -1251,7 +1310,7 @@
                     <div class="stat-label">Projects Delivered</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-num"><span class="counter" data-target="5">0</span>+</div>
+                    <div class="stat-num"><span class="counter" data-target="3">0</span>+</div>
                     <div class="stat-label">Happy Clients</div>
                 </div>
                 <div class="stat-card">
@@ -1320,15 +1379,11 @@
                     loading="lazy"></iframe></div>
             <div class="video-card"><iframe src="https://www.youtube.com/embed/fOZIEWJTepo" allowfullscreen
                     loading="lazy"></iframe></div>
-
-            <!-- Interactive card 1 — CBSE project -->
             <div class="interactive-card" onclick="openModal('interactiveModal')">
                 <i class="fas fa-cube"></i>
                 <span>HTML Interactive Project</span>
                 <small>click to explore</small>
             </div>
-
-            <!-- Interactive card 2 — SNE demo -->
             <div class="interactive-card" onclick="openModal('interactiveModal2')">
                 <i class="fas fa-vr-cardboard"></i>
                 <span>Short Demo for SNE</span>
@@ -1375,24 +1430,17 @@
         <div class="clients-label">Trusted by Innovative Partners</div>
         <div class="marquee">
             <div class="marquee-content">
-                <img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE">
-                <!-- duplicate for seamless loop -->
-                <img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
             </div>
         </div>
     </div>
 
-    <!-- CONTACT FORM (new section) -->
+    <!-- CONTACT FORM -->
     <section id="contact-form-section">
         <h2 class="section-title"><span>Get in</span> Touch</h2>
         <div class="contact-wrapper">
@@ -1406,8 +1454,7 @@
                 </div>
                 <div class="contact-detail">
                     <div class="contact-detail-icon"><i class="far fa-envelope"></i></div>
-                    <a href="mailto:info@astroanimationstudio.com"><span class="__cf_email__"
-                            data-cfemail="9af3f4fcf5dafbe9eee8f5fbf4f3f7fbeef3f5f4e9eeeffef3f5b4f9f5f7">info@astroanimationstudio.com</span></a>
+                    <a href="mailto:info@astroanimationstudio.com">info@astroanimationstudio.com</a>
                 </div>
                 <div class="contact-detail">
                     <div class="contact-detail-icon"><i class="fas fa-globe"></i></div>
@@ -1482,9 +1529,7 @@
                 <div class="footer-contact-item"><i class="fas fa-phone-alt"></i> <span style="color:#7a8899;">+91 86752
                         80561</span></div>
                 <div class="footer-contact-item"><i class="far fa-envelope"></i> <a
-                        href="mailto:info@astroanimationstudio.com"><span class="__cf_email__"
-                            data-cfemail="5831363e3718392b2c2a3739363135392c3137362b2c2d3c3137763b3735">info@astroanimationstudio.com</span></a>
-                </div>
+                        href="mailto:info@astroanimationstudio.com">info@astroanimationstudio.com</a></div>
                 <div class="footer-contact-item"><i class="fas fa-globe"></i> <a
                         href="https://www.astroanimationstudio.com" target="_blank">astroanimationstudio.com</a></div>
                 <div class="footer-contact-item"><i class="fab fa-instagram"></i> <span
@@ -1503,7 +1548,6 @@
             <iframe src="/cbse/cbse.html" allowfullscreen></iframe>
         </div>
     </div>
-
     <div id="interactiveModal2" class="interactive-modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal('interactiveModal2')">&times;</span>
@@ -1515,25 +1559,50 @@
     <script>
         // ── LOADER ──
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('hidden');
-            }, 1500);
+            setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1500);
         });
 
         // ── SCROLL PROGRESS + NAVBAR ──
         window.addEventListener('scroll', () => {
             const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
             document.getElementById('scroll-progress').style.width = scrolled + '%';
-
             document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
             document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
         });
 
-        // ── HERO SLIDER with dots ──
+        // ── HERO SLIDER — image slides in from left with ease-in-out ──
         const slides = document.querySelectorAll('.slide');
         const dotsContainer = document.getElementById('sliderDots');
         let currentSlide = 0;
+        let settleTimer = null;
 
+        const TRANSITION = 'transform 0.9s cubic-bezier(0.45, 0, 0.55, 1), opacity 0.9s cubic-bezier(0.45, 0, 0.55, 1)';
+
+        // Helper: snap image to off-screen-left instantly (no transition)
+        function resetImg(img) {
+            img.style.transition = 'none';
+            img.style.transform = 'translateX(-80px)';
+            img.style.opacity = '0';
+        }
+
+        // Helper: animate image into view
+        function enterImg(img) {
+            img.style.transition = TRANSITION;
+            img.style.transform = 'translateX(0)';
+            img.style.opacity = '1';
+        }
+
+        // Start float loop after entry finishes
+        function scheduleSettle(slide) {
+            clearTimeout(settleTimer);
+            settleTimer = setTimeout(() => {
+                slide.classList.add('settled');
+                // clear inline transform so CSS animation takes over cleanly
+                slide.querySelector('img').style.transform = '';
+            }, 950);
+        }
+
+        // Build dots
         slides.forEach((_, i) => {
             const dot = document.createElement('div');
             dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -1541,12 +1610,41 @@
             dotsContainer.appendChild(dot);
         });
 
+        // Pre-hide all non-active images
+        slides.forEach((slide, i) => {
+            if (i !== 0) resetImg(slide.querySelector('img'));
+        });
+
+        // Animate first slide in on load
+        enterImg(slides[0].querySelector('img'));
+        scheduleSettle(slides[0]);
+
         function goToSlide(n) {
-            slides[currentSlide].classList.remove('active');
+            if (n === currentSlide) return;
+
+            // 1. Hide outgoing slide
+            const outSlide = slides[currentSlide];
+            outSlide.classList.remove('active', 'settled');
             dotsContainer.children[currentSlide].classList.remove('active');
-            currentSlide = n;
-            slides[currentSlide].classList.add('active');
-            dotsContainer.children[currentSlide].classList.add('active');
+            // Snap outgoing image back to hidden (no animation needed for exit)
+            resetImg(outSlide.querySelector('img'));
+
+            // 2. Prepare incoming image at off-screen position (no transition yet)
+            const inSlide = slides[n];
+            inSlide.classList.remove('settled');
+            const inImg = inSlide.querySelector('img');
+            resetImg(inImg);
+
+            // 3. Force browser to paint the reset, then start entry animation
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    inSlide.classList.add('active');
+                    dotsContainer.children[n].classList.add('active');
+                    currentSlide = n;
+                    enterImg(inImg);
+                    scheduleSettle(inSlide);
+                });
+            });
         }
 
         setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4500);
@@ -1556,52 +1654,29 @@
         const ctx = canvas.getContext('2d');
         let stars = [];
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         function initStars() {
             stars = [];
             for (let i = 0; i < 160; i++) {
-                stars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    r: Math.random() * 1.5 + 0.3,
-                    o: Math.random(),
-                    speed: Math.random() * 0.3 + 0.05
-                });
+                stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 1.5 + 0.3, o: Math.random(), speed: Math.random() * 0.3 + 0.05 });
             }
         }
-
         function drawStars() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             stars.forEach(s => {
-                ctx.beginPath();
-                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(200, 190, 255, ${s.o})`;
-                ctx.fill();
-                s.o += (Math.random() - 0.5) * 0.02;
-                s.o = Math.max(0.1, Math.min(0.9, s.o));
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(200, 190, 255, ${s.o})`; ctx.fill();
+                s.o += (Math.random() - 0.5) * 0.02; s.o = Math.max(0.1, Math.min(0.9, s.o));
             });
             requestAnimationFrame(drawStars);
         }
-
         resizeCanvas(); initStars(); drawStars();
         window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
 
         // ── ABOUT TYPEWRITER ──
-        const aboutText = `We craft visual stories that inspire, imagining and innovating at the edge of animation. With deep passion and seasoned expertise, our team transforms raw ideas into stunning 2D and 3D animated experiences that captivate and engage.
-
-Whether it's character creation or immersive storytelling, we specialize in turning visions into vibrant realities.
-
-Driven by a pursuit of excellence, we view each project as a canvas for creative exploration. By blending art with cutting-edge technology, we deliver animations that not only look beautiful but also connect deeply with audiences.
-
-At Astro Animation Studio, we're not just animating — we're redefining what animation can be. ✦`;
-
+        const aboutText = `We craft visual stories that inspire, imagining and innovating at the edge of animation. With deep passion and seasoned expertise, our team transforms raw ideas into stunning 2D and 3D animated experiences that captivate and engage.\n\nWhether it's character creation or immersive storytelling, we specialize in turning visions into vibrant realities.\n\nDriven by a pursuit of excellence, we view each project as a canvas for creative exploration. By blending art with cutting-edge technology, we deliver animations that not only look beautiful but also connect deeply with audiences.\n\nAt Astro Animation Studio, we're not just animating — we're redefining what animation can be. ✦`;
         let aboutIdx = 0;
         const typewriterEl = document.getElementById('typewriter');
-
         function startAboutTyping() {
             if (aboutIdx < aboutText.length) {
                 const ch = aboutText.charAt(aboutIdx);
@@ -1610,54 +1685,35 @@ At Astro Animation Studio, we're not just animating — we're redefining what an
                 setTimeout(startAboutTyping, ch === '.' || ch === '!' ? 200 : 22);
             }
         }
-
-        // Start typing when about section is visible
         const aboutObserver = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting && aboutIdx === 0) {
-                startAboutTyping();
-            }
+            if (entries[0].isIntersecting && aboutIdx === 0) startAboutTyping();
         }, { threshold: 0.2 });
         aboutObserver.observe(document.getElementById('about'));
 
         // ── ANIMATED COUNTERS ──
         function animateCounter(el) {
-            const target = parseInt(el.dataset.target);
-            let count = 0;
+            const target = parseInt(el.dataset.target); let count = 0;
             const step = Math.ceil(target / 60);
             const interval = setInterval(() => {
-                count = Math.min(count + step, target);
-                el.textContent = count;
+                count = Math.min(count + step, target); el.textContent = count;
                 if (count >= target) clearInterval(interval);
             }, 30);
         }
-
         const counterObserver = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.querySelectorAll('.counter').forEach(animateCounter);
-                    counterObserver.unobserve(e.target);
-                }
-            });
+            entries.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('.counter').forEach(animateCounter); counterObserver.unobserve(e.target); } });
         }, { threshold: 0.3 });
         document.querySelectorAll('.about-stats').forEach(el => counterObserver.observe(el));
 
         // ── SCROLL REVEAL ──
         const revealObserver = new IntersectionObserver(entries => {
-            entries.forEach((e, i) => {
-                if (e.isIntersecting) {
-                    setTimeout(() => e.target.classList.add('visible'), i * 80);
-                    revealObserver.unobserve(e.target);
-                }
-            });
+            entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); revealObserver.unobserve(e.target); } });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.service-card, .video-card, .interactive-card, .team-member').forEach(el => revealObserver.observe(el));
 
         // ── TYPEWRITER PHRASES ──
         const typeEl = document.getElementById('typeText');
         const phrases = ['Smart Learning for Smart People', 'Upgrade Skills with Animation', 'Modern Digital Education', 'Learn Anytime, Anywhere'];
         let pI = 0, cI = 0, deleting = false;
-
         function typeEffect() {
             const cur = phrases[pI];
             typeEl.textContent = deleting ? cur.slice(0, --cI) : cur.slice(0, ++cI);
@@ -1667,7 +1723,6 @@ At Astro Animation Studio, we're not just animating — we're redefining what an
         }
         typeEffect();
 
-        // Rotating quotes
         const quotes = [
             '"Education is the passport to the future." — Malcolm X',
             '"Learning never exhausts the mind." — Leonardo da Vinci',
@@ -1676,47 +1731,28 @@ At Astro Animation Studio, we're not just animating — we're redefining what an
         ];
         let qI = 0;
         const quoteEl = document.getElementById('quote');
-        quoteEl.textContent = quotes[0];
+        quoteEl.textContent = quotes[0]; quoteEl.style.transition = 'opacity 0.3s';
         setInterval(() => { qI = (qI + 1) % quotes.length; quoteEl.style.opacity = 0; setTimeout(() => { quoteEl.textContent = quotes[qI]; quoteEl.style.opacity = 1; }, 300); }, 2800);
-        quoteEl.style.transition = 'opacity 0.3s';
 
-        // ── MODALS (unified) ──
-        function openModal(id) {
-            document.getElementById(id).classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('open');
-            document.body.style.overflow = '';
-        }
-        // Close modal on backdrop click
+        // ── MODALS ──
+        function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+        function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = ''; }
         document.querySelectorAll('.interactive-modal').forEach(m => {
             m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
         });
-        // Close on ESC
         document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.interactive-modal.open').forEach(m => closeModal(m.id));
-            }
+            if (e.key === 'Escape') document.querySelectorAll('.interactive-modal.open').forEach(m => closeModal(m.id));
         });
 
-        // ── HAMBURGER MENU ──
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('open');
-            document.getElementById('hamburger').classList.toggle('open');
-        }
-        function closeMenu() {
-            document.getElementById('navLinks').classList.remove('open');
-            document.getElementById('hamburger').classList.remove('open');
-        }
+        // ── HAMBURGER ──
+        function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); document.getElementById('hamburger').classList.toggle('open'); }
+        function closeMenu() { document.getElementById('navLinks').classList.remove('open'); document.getElementById('hamburger').classList.remove('open'); }
 
         // ── CONTACT FORM (EmailJS) ──
-        // Step 1: Replace these 3 values after setting up emailjs.com
-        const EJS_PUBLIC_KEY = 'C_CW9OGB97FBYuXVM';    // Account → API Keys → Public Key
-        const EJS_SERVICE_ID = 'service_fl29dyl';    // Email Services → your service ID
-        const EJS_TEMPLATE_ID = 'template_03hzadi';  // Email Templates → your template ID
+        const EJS_PUBLIC_KEY = 'C_CW9OGB97FBYuXVM';
+        const EJS_SERVICE_ID = 'service_fl29dyl';
+        const EJS_TEMPLATE_ID = 'template_03hzadi';
 
-        // Load EmailJS SDK
         (function () {
             const s = document.createElement('script');
             s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
@@ -1729,33 +1765,19 @@ At Astro Animation Studio, we're not just animating — we're redefining what an
             const email = document.getElementById('cf-email').value.trim();
             const service = document.getElementById('cf-service').value;
             const message = document.getElementById('cf-message').value.trim();
-
-            if (!name || !email || !message) {
-                alert('Please fill in your name, email, and message.');
-                return;
-            }
-
+            if (!name || !email || !message) { alert('Please fill in your name, email, and message.'); return; }
             const btn = document.querySelector('.submit-btn');
-            btn.textContent = 'Sending…';
-            btn.disabled = true;
-
+            btn.textContent = 'Sending…'; btn.disabled = true;
             try {
-                await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
-                    from_name: name,
-                    from_email: email,
-                    service_type: service || 'Not specified',
-                    message: message
-                });
+                await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, { from_name: name, from_email: email, service_type: service || 'Not specified', message });
                 btn.style.display = 'none';
                 document.getElementById('formSuccess').style.display = 'block';
             } catch (err) {
                 console.error('EmailJS error:', err);
-                btn.textContent = 'Send Message ✦';
-                btn.disabled = false;
+                btn.textContent = 'Send Message ✦'; btn.disabled = false;
                 alert('Could not send message. Please email us directly at info@astroanimationstudio.com');
             }
         }
-
     </script>
 </body>
 
