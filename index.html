@@ -281,17 +281,16 @@
             z-index: 1;
         }
 
-        /* ── SLIDE layout: fixed 50/50 halves ── */
+        /* ── SLIDE layout: image 62% / text 38% ── */
         .slide {
             position: absolute;
             inset: 0;
             opacity: 0;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 62fr 38fr;
             align-items: center;
-            padding: 0 8%;
+            padding: 0 2% 0 4%;
             gap: 0;
-            /* no cross-fade — controlled via JS classes */
             transition: opacity 0.15s ease;
         }
 
@@ -300,21 +299,21 @@
             z-index: 10;
         }
 
-        /* IMAGE half — slides in from left */
+        /* IMAGE half */
         .slide-img-wrap {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 70vh;
+            height: 88vh;
             overflow: hidden;
         }
 
         .slide img {
             width: 100%;
-            max-width: 420px;
-            max-height: 60vh;
+            max-width: 720px;
+            max-height: 84vh;
             object-fit: contain;
-            filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.4));
+            filter: drop-shadow(0 0 60px rgba(168, 85, 247, 0.55));
             /* position & opacity fully controlled by JS inline styles */
         }
 
@@ -1167,12 +1166,12 @@
             }
 
             .slide-img-wrap {
-                height: 35vh;
+                height: 38vh;
             }
 
             .slide img {
-                max-width: 260px;
-                max-height: 32vh;
+                max-width: 300px;
+                max-height: 36vh;
             }
 
             .slide-text {
