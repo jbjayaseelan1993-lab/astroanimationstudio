@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-Z974SPT367');
-</script>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astro Animation | international studio</title>
-    <!-- Google Fonts & Font Awesome for global icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,500;14..32,700&display=swap"
+    <title>Astro Animation | International Studio</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
     <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="shortcut icon" href="favicon.png">
 
     <style>
+        :root {
+            --purple: #a855f7;
+            --blue: #3b82f6;
+            --purple-light: #c084fc;
+            --blue-light: #60a5fa;
+            --bg: #0b0b0f;
+            --bg2: #0e1018;
+            --bg3: #12141c;
+            --surface: rgba(18, 20, 28, 0.7);
+            --border: rgba(255, 255, 255, 0.06);
+            --text: #f0f2f5;
+            --muted: #94a3b8;
+            --grad: linear-gradient(135deg, var(--purple), var(--blue));
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -35,128 +38,217 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0b0b0f;
-            color: #f0f2f5;
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* modern scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #1a1a1f;
+            background: #111;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(145deg, #a855f7, #3b82f6);
+            background: var(--grad);
             border-radius: 8px;
         }
 
-        /* LOADER — subtle international vibe */
+        /* ── SCROLL PROGRESS ── */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: var(--grad);
+            z-index: 9999;
+            transition: width 0.1s linear;
+        }
+
+        /* ── LOADER ── */
         #loader {
             position: fixed;
             inset: 0;
-            background: #0a0a0c;
-            z-index: 2000;
+            background: #07070a;
+            z-index: 3000;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            transition: opacity 0.5s;
+            transition: opacity 0.6s, visibility 0.6s;
         }
 
-        .loader-svg {
-            width: 100px;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="%23a855f7" stroke-width="6" stroke-dasharray="210" stroke-dashoffset="210"><animate attributeName="stroke-dashoffset" dur="1.5s" values="210;0" repeatCount="indefinite"/><animate attributeName="stroke" dur="3s" values="%23a855f7;%233b82f6;%23a855f7" repeatCount="indefinite"/></circle><circle cx="50" cy="50" r="25" fill="none" stroke="%233b82f6" stroke-width="4" stroke-dasharray="130" stroke-dashoffset="130"><animate attributeName="stroke-dashoffset" dur="1.2s" values="130;0" repeatCount="indefinite"/></circle></svg>');
-            background-size: contain;
-            filter: drop-shadow(0 0 12px #a855f7);
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-ring {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: var(--purple);
+            border-right-color: var(--blue);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .loader-text {
-            margin-top: 24px;
-            font-size: 1.8rem;
-            font-weight: 500;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #c084fc, #60a5fa);
+            margin-top: 22px;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            background: var(--grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* NAVBAR — frosted glass, minimalist */
+        /* ── NAVBAR ── */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1.2rem 5%;
+            padding: 1.1rem 6%;
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(8, 8, 12, 0.7);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(7, 7, 10, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: padding 0.3s;
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 6%;
         }
 
         .logo {
-            font-weight: 700;
-            font-size: 1.7rem;
-            background: linear-gradient(145deg, #c084fc, #60a5fa);
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
             display: flex;
-            gap: 2.2rem;
+            gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
-            color: #eaeef2;
+            color: #d1d9e6;
             text-decoration: none;
+            font-size: 0.95rem;
             font-weight: 400;
-            font-size: 1rem;
             transition: 0.2s;
             position: relative;
         }
 
-        .nav-links a:after {
+        .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -6px;
+            bottom: -5px;
             left: 0;
-            width: 0%;
+            width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #a855f7, #3b82f6);
+            background: var(--grad);
             transition: 0.25s;
-        }
-
-        .nav-links a:hover:after {
-            width: 100%;
+            border-radius: 2px;
         }
 
         .nav-links a:hover {
-            color: white;
+            color: #fff;
         }
 
-        /* HERO SLIDER — refined international look */
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--grad);
+            color: #fff !important;
+            padding: 0.5rem 1.3rem;
+            border-radius: 50px;
+            font-weight: 500 !important;
+            transition: opacity 0.2s, transform 0.2s !important;
+        }
+
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.9;
+            transform: translateY(-1px) !important;
+        }
+
+        /* hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* ── HERO ── */
         .hero {
             height: 100vh;
             position: relative;
             overflow: hidden;
-            background: #08080c;
-            /*background-image: url(/images/beautyback.jpg);*/
+            background: #07070b;
+        }
 
+        /* star canvas */
+        #starCanvas {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
         }
 
         .hero-slider {
             position: relative;
             width: 100%;
             height: 100%;
+            z-index: 1;
         }
 
         .slide {
@@ -177,21 +269,20 @@
         }
 
         .slide img {
-            width: 42%;
-            max-height: 70%;
+            width: 40%;
+            max-height: 65vh;
             object-fit: contain;
-            filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.3));
-            transform: scale(0.98);
-            animation: floatImage 4s infinite alternate;
+            filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.4));
+            animation: floatImage 4s ease-in-out infinite alternate;
         }
 
         @keyframes floatImage {
-            0% {
+            from {
                 transform: translateY(0) scale(0.98);
             }
 
-            100% {
-                transform: translateY(-12px) scale(1);
+            to {
+                transform: translateY(-14px) scale(1.01);
             }
         }
 
@@ -200,31 +291,59 @@
         }
 
         .slide-text h1 {
-            font-size: clamp(2.2rem, 4vw, 4rem);
-            font-weight: 700;
-            line-height: 1.2;
-            background: linear-gradient(135deg, #ffffff, #cbd5e1);
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 3.8vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.15;
+            background: linear-gradient(135deg, #ffffff 30%, #c4b5fd);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .slide-text p {
-            font-size: 1.2rem;
-            color: #a0aec0;
-            max-width: 550px;
-            border-left: 3px solid #a855f7;
-            padding-left: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 500px;
+            border-left: 3px solid var(--purple);
+            padding-left: 1.4rem;
         }
 
-        /* section headings — clean, subtle marker */
+        /* slider dots */
+        .slider-dots {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dot.active {
+            background: var(--purple);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* ── SECTIONS ── */
         section {
             padding: 100px 8%;
         }
 
         .section-title {
-            font-size: 2.8rem;
-            font-weight: 600;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 700;
             margin-bottom: 3rem;
             position: relative;
             display: inline-block;
@@ -232,7 +351,7 @@
         }
 
         .section-title span {
-            background: linear-gradient(145deg, #a855f7, #3b82f6);
+            background: var(--grad);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -242,102 +361,157 @@
             position: absolute;
             bottom: -12px;
             left: 0;
-            width: 70px;
-            height: 4px;
-            background: linear-gradient(90deg, #a855f7, #3b82f6);
+            width: 60px;
+            height: 3px;
+            background: var(--grad);
             border-radius: 4px;
         }
 
-        /* about text */
-        .about-text {
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
-            font-size: 1.2rem;
-            color: #b0b8c5;
-            background: rgba(20, 20, 30, 0.3);
-            padding: 2.5rem;
-            border-radius: 32px;
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(255, 255, 255, 0.02);
+        /* ── ABOUT ── */
+        .about-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
         }
 
-        /* cards — glass + international touch */
+        .about-text-block {
+            font-size: 1.05rem;
+            color: #b0bec5;
+            line-height: 1.85;
+        }
+
+        .about-text-block #typewriter {
+            display: inline;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 1.8rem;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(168, 85, 247, 0.4);
+            transform: translateY(-4px);
+        }
+
+        .stat-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+
+        /* ── SERVICES ── */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
         }
 
         .service-card {
-            background: rgba(18, 20, 28, 0.7);
+            background: var(--surface);
             backdrop-filter: blur(8px);
-            border-radius: 28px;
+            border-radius: 24px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-            transition: all 0.4s;
-            box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .service-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .service-card:hover {
-            transform: translateY(-16px) scale(1.02);
-            border-color: #a855f740;
-            box-shadow: 0 30px 40px -15px #a855f7;
+            transform: translateY(-12px) scale(1.01);
+            border-color: rgba(168, 85, 247, 0.35);
+            box-shadow: 0 24px 48px -16px rgba(168, 85, 247, 0.5);
         }
 
         .service-card img {
             width: 100%;
-            height: 220px;
+            height: 210px;
             object-fit: cover;
-            transition: transform 0.8s;
+            transition: transform 0.7s;
         }
 
         .service-card:hover img {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         .service-content {
-            padding: 1.8rem;
+            padding: 1.6rem;
         }
 
         .service-content h3 {
-            font-size: 1.5rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
             color: #e2e8f0;
         }
 
         .service-content p {
-            color: #9aa4b8;
-            font-size: 0.95rem;
+            color: #8898aa;
+            font-size: 0.92rem;
+            line-height: 1.7;
         }
 
-        /* video grid — international & elegant */
+        /* ── PROJECTS ── */
         .youtube-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 1.8rem;
         }
 
         .video-card {
-            background: #14161e;
-            border-radius: 24px;
+            background: var(--bg3);
+            border-radius: 20px;
             overflow: hidden;
+            border: 1px solid var(--border);
             transition: 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-            box-shadow: 0 12px 24px -12px #000;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .video-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .video-card iframe {
             width: 100%;
             height: 200px;
             border: none;
+            display: block;
         }
 
         .video-card:hover {
-            transform: scale(1.02) translateY(-6px);
-            box-shadow: 0 20px 30px -8px #a855f7;
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: 0 16px 32px -8px rgba(168, 85, 247, 0.4);
+            border-color: rgba(168, 85, 247, 0.25);
         }
 
         .interactive-card {
@@ -346,74 +520,158 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 0.5rem;
             height: 200px;
-            border-radius: 24px;
+            border-radius: 20px;
             cursor: pointer;
-            border: 1px dashed #a855f7;
-            transition: 0.2s;
+            border: 1px dashed rgba(168, 85, 247, 0.5);
+            transition: 0.25s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .interactive-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .interactive-card:hover {
+            background: linear-gradient(145deg, #221a30, #121624);
+            border-color: var(--purple);
+            transform: scale(1.03) translateY(-4px);
+            box-shadow: 0 16px 32px -8px rgba(168, 85, 247, 0.4);
         }
 
         .interactive-card i {
-            font-size: 3rem;
-            color: #60a5fa;
-            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            color: var(--blue-light);
         }
 
         .interactive-card span {
-            font-weight: 500;
-            color: #cbd5e1;
+            font-weight: 600;
+            color: #e2e8f0;
+            font-size: 1rem;
         }
 
-        /* TEAM — modern grid */
+        .interactive-card small {
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+
+        /* ── TYPEWRITER BLOCK ── */
+        .typewriter-block {
+            background: linear-gradient(145deg, #0e1120, #0b0d18);
+            border-radius: 32px;
+            padding: 2.5rem 3rem;
+            margin: 2rem 8%;
+            text-align: center;
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .typewriter-block::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        #typeText {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            font-weight: 600;
+            color: #c4b5fd;
+        }
+
+        .cursor-blink {
+            animation: cursorBlink 1s infinite;
+            font-weight: 300;
+            color: var(--purple-light);
+        }
+
+        @keyframes cursorBlink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        #quote {
+            font-size: 1.1rem;
+            color: #fbbf24;
+            font-style: italic;
+            margin-top: 1rem;
+            min-height: 1.5rem;
+        }
+
+        /* ── TEAM ── */
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 2.2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 2rem;
         }
 
         .team-member {
-            background: rgba(18, 22, 30, 0.6);
+            background: rgba(16, 18, 28, 0.6);
             backdrop-filter: blur(4px);
-            border-radius: 32px;
+            border-radius: 28px;
             padding: 1.8rem 1rem;
             text-align: center;
             border: 1px solid rgba(168, 85, 247, 0.1);
             transition: 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .team-member.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .team-member:hover {
-            border-color: #a855f7;
+            border-color: var(--purple);
             transform: translateY(-8px);
-            box-shadow: 0 20px 24px -12px #a855f7;
+            box-shadow: 0 20px 30px -12px rgba(168, 85, 247, 0.5);
         }
 
         .team-member img {
-            width: 150px;
-            height: 180px;
+            width: 140px;
+            height: 170px;
             object-fit: cover;
-            border-radius: 24px;
-            margin-bottom: 1.2rem;
-            border: 2px solid #2d3748;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(168, 85, 247, 0.2);
         }
 
         .team-member h3 {
-            font-size: 1.2rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
             font-weight: 600;
-            color: white;
+            color: #fff;
         }
 
         .team-member p {
-            color: #94a3b8;
-            font-size: 0.9rem;
+            color: var(--muted);
+            font-size: 0.85rem;
         }
 
-        /* CLIENTS infinite scroller */
+        /* ── CLIENTS ── */
         .clients-section {
             background: #0c0e14;
             padding: 60px 8%;
-            border-top: 1px solid #20222a;
-            border-bottom: 1px solid #20222a;
+            border-top: 1px solid #1e2030;
+            border-bottom: 1px solid #1e2030;
+        }
+
+        .clients-label {
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
         }
 
         .marquee {
@@ -423,17 +681,17 @@
 
         .marquee-content {
             display: flex;
-            gap: 3rem;
+            gap: 4rem;
             width: max-content;
-            animation: scrollMarquee 22s linear infinite;
+            animation: scrollMarquee 20s linear infinite;
         }
 
         .marquee-content img {
-            height: 60px;
+            height: 56px;
             width: auto;
-            filter: brightness(0.8) grayscale(0.4);
-            opacity: 0.7;
-            transition: 0.2s;
+            filter: brightness(0.7) grayscale(0.3);
+            opacity: 0.65;
+            transition: 0.3s;
         }
 
         .marquee-content img:hover {
@@ -442,99 +700,253 @@
         }
 
         @keyframes scrollMarquee {
-            0% {
+            from {
                 transform: translateX(0);
             }
 
-            100% {
+            to {
                 transform: translateX(-50%);
             }
         }
 
-        /* QUOTE + typewriter modern */
-        .typewriter-block {
-            background: #11141f;
-            border-radius: 60px;
-            padding: 2rem;
-            margin: 2rem 0;
-            text-align: center;
-            border: 1px solid #2d2f3a;
+        /* ── CONTACT FORM ── */
+        #contact-form-section {
+            background: linear-gradient(180deg, var(--bg) 0%, #0a0c14 100%);
         }
 
-        #typeText {
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h3 {
+            font-family: 'Syne', sans-serif;
             font-size: 1.8rem;
-            font-weight: 500;
-            color: #a78bfa;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #e2e8f0;
         }
 
-        .cursor-blink {
-            animation: blink 1s infinite;
-            font-weight: 300;
+        .contact-info p {
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 2rem;
         }
 
-        @keyframes blink {
-            50% {
-                opacity: 0;
-            }
-        }
-
-        #quote {
-            font-size: 1.4rem;
-            color: #fbbf24;
-            font-style: italic;
-        }
-
-        /* OFFER BOX — international pop */
-        .offer-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(145deg, #1f1b2e, #0d1120);
-            padding: 1.2rem 2rem;
-            border-radius: 60px;
-            border: 1px solid #a855f7;
-            box-shadow: 0 10px 28px #a855f740;
-            z-index: 500;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
+        .contact-detail {
             display: flex;
             align-items: center;
-            gap: 12px;
-            transition: 0.25s;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .offer-float:hover {
-            transform: scale(1.05);
-            background: #201d32;
-        }
-
-        .offer-float .offer-text {
-            color: white;
-            font-weight: 600;
-        }
-
-        .offer-float .badge {
-            background: #a855f7;
-            border-radius: 30px;
-            padding: 4px 14px;
-            font-size: 0.8rem;
-            color: black;
-            font-weight: 700;
-        }
-
-        .offer-close {
-            margin-left: 10px;
-            background: #1e293b;
-            border-radius: 50%;
-            width: 26px;
-            height: 26px;
+        .contact-detail-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(168, 85, 247, 0.15);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            color: var(--purple-light);
+            font-size: 1rem;
+            flex-shrink: 0;
         }
 
-        /* SOCIAL FIXED refined */
+        .contact-detail a,
+        .contact-detail span {
+            color: var(--muted);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .contact-detail a:hover {
+            color: #fff;
+        }
+
+        .contact-form {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: rgba(12, 14, 22, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 0.85rem 1.1rem;
+            color: #e2e8f0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+            outline: none;
+            resize: none;
+        }
+
+        .form-group input:focus,
+        .form-group select,
+        .form-group textarea:focus {
+            border-color: var(--purple);
+        }
+
+        .form-group select {
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background: #12141c;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--grad);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+            color: #4ade80;
+            font-weight: 500;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: #080a10;
+            padding: 4rem 8% 2rem;
+            border-top: 1px solid #1a1c28;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer p {
+            color: #7a8899;
+            line-height: 1.7;
+        }
+
+        .footer h4 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+            color: #e2e8f0;
+        }
+
+        .footer a {
+            color: #7a8899;
+            text-decoration: none;
+            transition: 0.2s;
+            display: block;
+            margin-bottom: 0.6rem;
+        }
+
+        .footer a:hover {
+            color: #fff;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-contact-item i {
+            color: var(--purple);
+            width: 18px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .social-links a:hover {
+            background: var(--purple);
+            border-color: var(--purple);
+            color: #fff;
+        }
+
+        .copyright {
+            border-top: 1px solid #1a1c28;
+            padding-top: 2rem;
+            text-align: center;
+            color: #4a5568;
+            font-size: 0.88rem;
+        }
+
+        /* ── SOCIAL DOCK ── */
         .social-dock {
             position: fixed;
             right: 20px;
@@ -542,117 +954,159 @@
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             z-index: 900;
-            transition: 0.3s;
         }
 
         .social-dock a {
-            background: #1e1e2a;
-            width: 48px;
-            height: 48px;
-            border-radius: 30px;
+            background: rgba(18, 18, 26, 0.85);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 1.4rem;
-            backdrop-filter: blur(8px);
-            border: 1px solid #334155;
+            color: var(--muted);
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
             transition: 0.2s;
+            text-decoration: none;
         }
 
         .social-dock a:hover {
-            background: #a855f7;
-            border-color: white;
-            transform: scale(1.15);
+            background: var(--purple);
+            border-color: transparent;
+            color: #fff;
+            transform: scale(1.1) translateX(-4px);
         }
 
-        /* FOOTER — international minimal */
-        .footer {
-            background: #0b0d13;
-            padding: 4rem 8% 2rem;
-            border-top: 1px solid #20222e;
+        /* ── BACK TO TOP ── */
+        #backTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 46px;
+            height: 46px;
+            background: var(--grad);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            z-index: 800;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 0.3s;
+            border: none;
         }
 
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1.5fr;
-            gap: 3rem;
+        #backTop.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(145deg, #c084fc, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
+        #backTop:hover {
+            transform: translateY(-3px);
         }
 
-        .footer a {
-            color: #b0b8c5;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-
-        .footer a:hover {
-            color: white;
-        }
-
-        .footer i {
-            width: 24px;
-            color: #a855f7;
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 4rem;
-            color: #5f6b7a;
-            font-size: 0.9rem;
-        }
-
-        /* modal interactive */
+        /* ── MODALS ── */
         .interactive-modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(4, 6, 12, 0.95);
+            background: rgba(4, 6, 12, 0.96);
             z-index: 2001;
             align-items: center;
             justify-content: center;
         }
 
+        .interactive-modal.open {
+            display: flex;
+        }
+
         .modal-content {
-            width: 90%;
-            height: 85%;
+            width: 92%;
+            height: 88%;
             background: #0e1018;
-            border-radius: 40px;
-            border: 1px solid #334155;
+            border-radius: 32px;
+            border: 1px solid #2d3748;
             overflow: hidden;
             position: relative;
         }
 
         .modal-close {
             position: absolute;
-            top: 15px;
-            right: 25px;
-            font-size: 28px;
+            top: 14px;
+            right: 20px;
+            font-size: 26px;
             cursor: pointer;
             color: #aaa;
             z-index: 10;
+            line-height: 1;
+            transition: color 0.2s;
         }
 
-        /* responsive */
-        @media (max-width: 800px) {
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .modal-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+
+            .about-wrapper,
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                inset: 0;
+                top: 70px;
+                background: rgba(7, 7, 10, 0.98);
+                backdrop-filter: blur(20px);
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                font-size: 1.2rem;
+                z-index: 999;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
             .slide {
                 flex-direction: column;
                 text-align: center;
-                gap: 1rem;
+                gap: 1.5rem;
+                padding: 0 6%;
             }
 
             .slide img {
-                width: 70%;
+                width: 65%;
             }
 
             .slide-text {
@@ -663,379 +1117,634 @@
                 grid-template-columns: 1fr;
             }
 
-            .navbar {
-                padding: 1rem 5%;
+            .form-row {
+                grid-template-columns: 1fr;
             }
 
-            .nav-links {
-                gap: 1rem;
-            }
-        }
-
-        /* about section */
-        #typewriter {
-            border-right: 3px solid #fff;
-            padding-right: 5px;
-            animation: blink 0.8s infinite;
-        }
-
-        @keyframes blink {
-            0% {
-                border-color: transparent;
+            .typewriter-block {
+                margin: 1rem 5%;
+                padding: 2rem 1.5rem;
             }
 
-            50% {
-                border-color: white;
+            section {
+                padding: 70px 5%;
             }
 
-            100% {
-                border-color: transparent;
+            .about-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .social-dock {
+                right: 10px;
+            }
+
+            .social-dock a {
+                width: 38px;
+                height: 38px;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 
 <body>
+    <div id="scroll-progress"></div>
+
     <div id="loader">
-        <div class="loader-svg"></div>
-        <div class="loader-text">ASTRO ANIMATION STUDIO</div>
+        <div class="loader-ring"></div>
+        <div class="loader-text">Astro Animation Studio</div>
     </div>
 
-    <!-- floating social dock (always visible) -->
+    <!-- Social dock -->
     <div class="social-dock">
-        <a href="https://wa.me/918675280561" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a href="mailto:info@astroanimationstudio.com"><i class="far fa-envelope"></i></a>
+        <a href="https://wa.me/918675280561" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="/cdn-cgi/l/email-protection#a7cec9c1c8e7c6d4d3d5c8c6c9cecac6d3cec8c9d4d3d2c3cec889c4c8ca"
+            title="Email"><i class="far fa-envelope"></i></a>
         <a href="https://www.instagram.com/astroaniamtionstudious?utm_source=qr&igsh=MXFjemczamN4eGNhbg%3D%3D"
-            target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.youtube.com/@LearnWithJB-x9r" target="_blank"><i class="fab fa-youtube"></i></a>
+            target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com/@LearnWithJB-x9r" target="_blank" title="YouTube"><i
+                class="fab fa-youtube"></i></a>
     </div>
 
-    <!-- offer float 
-    <div class="offer-float" id="offerFloat">
-        <span class="badge">-20%</span>
-        <span class="offer-text">2D explainer video</span>
-        <span class="offer-close" id="offerClose"><i class="fas fa-times"></i></span>
-    </div>-->
+    <!-- Back to top -->
+    <button id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-    <!-- navbar -->
-    <div class="navbar">
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
         <div class="logo">✦ ASTRO ANIMATION</div>
-        <div class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact" id="contactBtn">Contact</a>
+        <div class="nav-links" id="navLinks">
+            <a href="#home" onclick="closeMenu()">Home</a>
+            <a href="#about" onclick="closeMenu()">About</a>
+            <a href="#services" onclick="closeMenu()">Services</a>
+            <a href="#projects" onclick="closeMenu()">Projects</a>
+            <a href="#team" onclick="closeMenu()">Team</a>
+            <a href="#contact-form-section" class="nav-cta" onclick="closeMenu()">Contact Us</a>
         </div>
-    </div>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
 
-    <!-- HERO with slider (original image paths) -->
+    <!-- HERO -->
     <section id="home" class="hero">
-        <div class="hero-slider">
-            <div class="slide active"><img src="/images/captivate.png" alt="">
+        <canvas id="starCanvas"></canvas>
+        <div class="hero-slider" id="heroSlider">
+            <div class="slide active">
+                <img src="/images/captivate.png" alt="Captivate">
                 <div class="slide-text">
                     <h1>We turn concepts into captivating realities</h1>
-                    <p>Highlights how raw ideas are shaped into engaging, narrative-driven animations</p>
+                    <p>Raw ideas shaped into engaging, narrative-driven animations that move audiences</p>
                 </div>
             </div>
-            <div class="slide"><img src="/images/astro.png" alt="">
+            <div class="slide">
+                <img src="/images/astro.png" alt="Astro">
                 <div class="slide-text">
                     <h1>Elevate your brand with Astro</h1>
-                    <p>Emphasizes the journey from imagination to animated output, with a personal touch</p>
+                    <p>From imagination to animated output — every frame, a personal touch</p>
                 </div>
             </div>
-            <div class="slide"><img src="/images/transform wonders.png" alt="">
+            <div class="slide">
+                <img src="/images/transform wonders.png" alt="Transform">
                 <div class="slide-text">
                     <h1>Transform ideas into animated wonders</h1>
-                    <p>Direct and emotional, this line focuses on the magical aspect of animation</p>
+                    <p>The magical aspect of animation, brought to life with precision and heart</p>
                 </div>
             </div>
-            <div class="slide"><img src="/images/framebyframe.png" alt="">
+            <div class="slide">
+                <img src="/images/framebyframe.png" alt="Frame by Frame">
                 <div class="slide-text">
                     <h1>Animating dreams into reality, frame by frame</h1>
-                    <p>Focuses on both the technical and emotional impact of animated work</p>
+                    <p>Technical mastery meets emotional storytelling — every frame counts</p>
                 </div>
             </div>
         </div>
+        <div class="slider-dots" id="sliderDots"></div>
     </section>
 
     <!-- ABOUT -->
     <section id="about">
-        <h2 class="section-title"><span>About</span> us</h2>
-        <div class="about-text">
-            <p>`We craft visual stories that inspire, imagining and innovating at the edge of animation. With a deep
-                passion and seasoned expertise, our team transforms raw ideas into stunning 2D and 3D animated
-                experiences that captivate and engage. Whether it's character creation or immersive storytelling, we
-                specialize in turning visions into vibrant realities.
-
-                Driven by a pursuit of excellence, we view each project as a canvas for creative exploration. By
-                blending art with cutting-edge technology, we deliver animations that not only look beautiful but also
-                connect deeply with audiences.
-
-                Step into a world where imagination leads the way and every frame tells a story. At Astro Animation
-                Studio, we're not just animating—we’re redefining what animation can be.
-
-                Thank you for being part of our journey. Together, let’s bring the extraordinary to life.✦`</p>
+        <h2 class="section-title"><span>About</span> Us</h2>
+        <div class="about-wrapper">
+            <div class="about-text-block">
+                <span id="typewriter"></span><span
+                    style="border-right:2px solid #a855f7; animation: cursorBlink 0.8s infinite; margin-left:1px;">&nbsp;</span>
+            </div>
+            <div class="about-stats">
+                <div class="stat-card">
+                    <div class="stat-num"><span class="counter" data-target="8">0</span>+</div>
+                    <div class="stat-label">Years of Experience</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num"><span class="counter" data-target="200">0</span>+</div>
+                    <div class="stat-label">Projects Delivered</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num"><span class="counter" data-target="50">0</span>+</div>
+                    <div class="stat-label">Happy Clients</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num"><span class="counter" data-target="15">0</span>+</div>
+                    <div class="stat-label">Team Members</div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- SERVICES (original image paths) -->
+    <!-- SERVICES -->
     <section id="services">
         <h2 class="section-title"><span>Services</span></h2>
         <div class="grid">
-            <div class="service-card"><img src="/images/Design, Animation & Videos.jpg" alt="">
+            <div class="service-card">
+                <img src="/images/Design, Animation & Videos.jpg" alt="Design & Animation">
                 <div class="service-content">
-                    <h3>Design & Animation</h3>
-                    <p>Astro's creative fusion of tech and art crafts captivating 2D/3D animations, motion graphics,
-                        illustrations, and interactive storyboards, enhancing brand communication and creating dynamic
-                        movie
-                        experiences with innovative designs</p>
+                    <h3>Design &amp; Animation</h3>
+                    <p>Creative fusion of tech and art crafts captivating 2D/3D animations, motion graphics,
+                        illustrations, and interactive storyboards — enhancing brand communication with innovative
+                        designs.</p>
                 </div>
             </div>
-            <div class="service-card"><img src="/images/e learning.jpg" alt="">
+            <div class="service-card">
+                <img src="/images/e learning.jpg" alt="E-Learning">
                 <div class="service-content">
                     <h3>E‑Learning Solutions</h3>
-                    <p>Empowering education with dynamic e-learning solutions, featuring engaging K-12 videos. Our
-                        platform offers
-                        role-based access, detailed reporting, and personalized learning journeys, revolutionizing
-                        organizational
-                        education delivery</p>
+                    <p>Empowering education with dynamic e-learning solutions featuring engaging K-12 videos. Our
+                        platform offers role-based access, detailed reporting, and personalized learning journeys.</p>
                 </div>
             </div>
-            <div class="service-card"><img src="/images/html.jpg" alt="">
+            <div class="service-card">
+                <img src="/images/html.jpg" alt="HTML5">
                 <div class="service-content">
                     <h3>Animate CC → HTML5</h3>
-                    <p>Embracing the dynamic shift in technological landscapes, our team specializes in the swift and
-                        seamless
-                        conversion of Animate CC to HTML5, a pivotal step in ensuring unfettered accessibility and
-                        heightened
-                        interactivity</p>
+                    <p>Swift and seamless conversion of Animate CC to HTML5 — ensuring unfettered accessibility and
+                        heightened interactivity for modern digital platforms.</p>
                 </div>
             </div>
-            <div class="service-card"><img src="/images/lms.jpg" alt="">
+            <div class="service-card">
+                <img src="/images/lms.jpg" alt="LMS">
                 <div class="service-content">
-                    <h3>LMS deployment</h3>
-                    <p>Empowering through impactful e-learning, we specialize in engaging multimedia content,
-                        role-specific
-                        access, and robust reporting. Our seasoned team ensures seamless LMS deployment</p>
+                    <h3>LMS Deployment</h3>
+                    <p>Impactful e-learning with engaging multimedia content, role-specific access, and robust
+                        reporting. Our seasoned team ensures seamless, scalable LMS deployment.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PROJECTS + video grid + interactive (original youtube IDs kept) -->
+    <!-- PROJECTS -->
     <section id="projects">
         <h2 class="section-title"><span>Projects</span></h2>
         <div class="youtube-grid">
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/8u5ZZW1Yec8" allowfullscreen
+                    loading="lazy"></iframe></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/h3wKmHfDtjY" allowfullscreen
+                    loading="lazy"></iframe></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/09zN3__Y9G8" allowfullscreen
+                    loading="lazy"></iframe></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/Kpbz3dWjbMc" allowfullscreen
+                    loading="lazy"></iframe></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/4cP9F81O-aE" allowfullscreen
+                    loading="lazy"></iframe></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/tPC5-8JcLsQ" allowfullscreen
+                    loading="lazy"></iframe></div>
+            <div class="video-card"><iframe src="https://www.youtube.com/embed/fOZIEWJTepo" allowfullscreen
+                    loading="lazy"></iframe></div>
 
-            <div class="video-card"><iframe src="https://www.youtube.com/embed/8u5ZZW1Yec8" allowfullscreen></iframe>
-            </div>
-            <div class="video-card"><iframe src="https://www.youtube.com/embed/h3wKmHfDtjY" allowfullscreen></iframe>
-            </div>
-            <div class="video-card"><iframe src="https://www.youtube.com/embed/09zN3__Y9G8" allowfullscreen></iframe>
-            </div>
-            <div class="video-card"><iframe src="https://www.youtube.com/embed/Kpbz3dWjbMc" allowfullscreen></iframe>
-            </div>
-            <div class="video-card"><iframe src="https://www.youtube.com/embed/4cP9F81O-aE" allowfullscreen></iframe>
-            </div>
-            <div class="video-card"><iframe src="https://www.youtube.com/embed/tPC5-8JcLsQ" allowfullscreen></iframe>
-            </div>
-            <div class="video-card"><iframe src="https://www.youtube.com/embed/fOZIEWJTepo" allowfullscreen></iframe>
+            <!-- Interactive card 1 — CBSE project -->
+            <div class="interactive-card" onclick="openModal('interactiveModal')">
+                <i class="fas fa-cube"></i>
+                <span>HTML Interactive Project</span>
+                <small>click to explore</small>
             </div>
 
-            <div class="interactive-card" onclick="openInteractive()"><i class="fas fa-cube"></i><span>HTML Interactive
-                    Project</span><small style="color:#7f8c8d;">click to explore</small>
-            </div>
-
-            <div class="interactive-card" onclick="openInteractive2()">
+            <!-- Interactive card 2 — SNE demo -->
+            <div class="interactive-card" onclick="openModal('interactiveModal2')">
                 <i class="fas fa-vr-cardboard"></i>
-                <span>Short demo for SNE</span>
-                <small style="color:#7f8c8d;">click to explore</small>
+                <span>Short Demo for SNE</span>
+                <small>click to explore</small>
             </div>
-
         </div>
-
-
-
     </section>
 
-
-    <div id="interactiveModal2" class="interactive-modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeInteractive2()">&times;</span>
-
-            <iframe style="width:100%; height:100%;" src="/sne/Untitled-1.html">
-            </iframe>
-
-        </div>
-    </div>
-
-
-
-    <!-- typewriter + quote block (international education vibe) -->
+    <!-- Typewriter quote block -->
     <div class="typewriter-block">
         <div><span id="typeText"></span><span class="cursor-blink">|</span></div>
-        <div id="quote" style="margin-top: 1rem;"></div>
+        <div id="quote"></div>
     </div>
 
-    <!-- TEAM section (original image paths) -->
-    <section class="team-section" style="padding-top:0;">
-        <h2 class="section-title"><span>Creative</span> team</h2>
+    <!-- TEAM -->
+    <section id="team" style="padding-top:60px;">
+        <h2 class="section-title"><span>Creative</span> Team</h2>
         <div class="team-grid">
-            <div class="team-member"><img src="/images/jayaseelan.jpg" alt="">
+            <div class="team-member"><img src="/images/jayaseelan.jpg" alt="Jayaseelan">
                 <h3>Jayaseelan</h3>
-                <p>Founder & CEO</p>
+                <p>Founder &amp; CEO</p>
             </div>
-            <div class="team-member"><img src="/images/ravi shankar.jpg" alt="">
-                <h3>Ravi shankar</h3>
+            <div class="team-member"><img src="/images/ravi shankar.jpg" alt="Ravi Shankar">
+                <h3>Ravi Shankar</h3>
                 <p>Managing Director</p>
             </div>
-            <div class="team-member"><img src="/images/raj bharathi.jpg" alt="">
+            <div class="team-member"><img src="/images/raj bharathi.jpg" alt="Raj Bharathi">
                 <h3>Raj Bharathi</h3>
                 <p>Content Dev</p>
             </div>
-            <div class="team-member"><img src="/images/vignesh.png" alt="">
+            <div class="team-member"><img src="/images/vignesh.png" alt="Vignesh">
                 <h3>Vignesh</h3>
-                <p>UI/UX & frontend</p>
+                <p>UI/UX &amp; Frontend</p>
             </div>
-            <div class="team-member"><img src="/images/elanthamizh.jpg" alt="">
+            <div class="team-member"><img src="/images/elanthamizh.jpg" alt="Elanthamizh">
                 <h3>Elanthamizh</h3>
-                <p>Sr 2D animator</p>
+                <p>Sr 2D Animator</p>
             </div>
         </div>
     </section>
 
-    <!-- CLIENTS marquee (original client logo) -->
+    <!-- CLIENTS -->
     <div class="clients-section">
-        <div style="font-weight:600; margin-bottom:2rem; letter-spacing:1.5px;">TRUSTED BY INNOVATIVE PARTNERS</div>
+        <div class="clients-label">Trusted by Innovative Partners</div>
         <div class="marquee">
             <div class="marquee-content">
-                <img src="/images/sne Logo.png" alt="client logo">
-                <img src="/images/sne Logo.png" alt="client logo">
-                <img src="/images/sne Logo.png" alt="client logo">
-                <img src="/images/sne Logo.png" alt="client logo">
-                <img src="/images/sne Logo.png" alt="client logo">
-                <img src="/images/sne Logo.png" alt="client logo">
+                <img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE">
+                <!-- duplicate for seamless loop -->
+                <img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE">
+                <img src="/images/sne Logo.png" alt="SNE">
             </div>
         </div>
     </div>
 
-    <!-- CONTACT footer area (original logo + email) -->
+    <!-- CONTACT FORM (new section) -->
+    <section id="contact-form-section">
+        <h2 class="section-title"><span>Get in</span> Touch</h2>
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h3>Let's build something extraordinary together</h3>
+                <p>Whether you need a 2D explainer, e-learning module, HTML5 conversion, or a full animated experience —
+                    we're here to bring your vision to life.</p>
+                <div class="contact-detail">
+                    <div class="contact-detail-icon"><i class="fas fa-phone-alt"></i></div>
+                    <span>+91 86752 80561</span>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-detail-icon"><i class="far fa-envelope"></i></div>
+                    <a href="mailto:info@astroanimationstudio.com"><span class="__cf_email__"
+                            data-cfemail="9af3f4fcf5dafbe9eee8f5fbf4f3f7fbeef3f5f4e9eeeffef3f5b4f9f5f7">info@astroanimationstudio.com</span></a>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-detail-icon"><i class="fas fa-globe"></i></div>
+                    <a href="https://www.astroanimationstudio.com" target="_blank">www.astroanimationstudio.com</a>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <span>Based in India &mdash; Serving Worldwide</span>
+                </div>
+            </div>
+            <div class="contact-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" id="cf-name" placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="cf-email" placeholder="john@company.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Service Interested In</label>
+                    <select id="cf-service">
+                        <option value="">Select a service…</option>
+                        <option>2D / 3D Animation</option>
+                        <option>E-Learning Solutions</option>
+                        <option>Animate CC → HTML5 Conversion</option>
+                        <option>LMS Deployment</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea id="cf-message" rows="5" placeholder="Tell us about your project…"></textarea>
+                </div>
+                <button class="submit-btn" onclick="submitForm()">Send Message &nbsp;✦</button>
+                <div class="form-success" id="formSuccess">
+                    <i class="fas fa-check-circle" style="font-size:1.5rem;margin-bottom:0.5rem;display:block;"></i>
+                    Thank you! We'll get back to you within 24 hours.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer class="footer" id="contact">
         <div class="footer-grid">
             <div>
                 <div class="footer-logo">ASTRO animation</div>
-                <p style="color:#94a3b8;">Storytelling through motion.<br>Based in India, serving worldwide.</p>
-                <div style="margin: 1.5rem 0;"><i class="fas fa-phone-alt"></i> +91 86752 80561</div>
+                <p>Storytelling through motion.<br>Based in India, serving worldwide.</p>
+                <div class="social-links">
+                    <a href="https://wa.me/918675280561" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="/cdn-cgi/l/email-protection#741d1a121b34150700061b151a1d1915001d1b1a070001101d1b5a171b19"><i
+                            class="far fa-envelope"></i></a>
+                    <a href="https://www.instagram.com/astroaniamtionstudious" target="_blank"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@LearnWithJB-x9r" target="_blank"><i
+                            class="fab fa-youtube"></i></a>
+                </div>
             </div>
             <div>
-                <h4 style="margin-bottom:1rem;">Explore</h4>
-                <p><a href="#home">Home</a></p>
-                <p><a href="#about">About</a></p>
-                <p><a href="#services">Services</a></p>
-                <p><a href="#projects">Projects</a></p>
+                <h4>Explore</h4>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#projects">Projects</a>
+                <a href="#team">Team</a>
             </div>
             <div>
-                <h4 style="margin-bottom:1rem;">Let's talk</h4>
-                <p><i class="far fa-envelope"></i> <a
-                        href="mailto:info@astroanimationstudio.com">info@astroanimationstudio.com</a></p>
-                <p><i class="fas fa-globe"></i> <a
-                        href="https://www.astroanimationstudio.com">www.astroanimationstudio.com</a></p>
-                <p><i class="fab fa-instagram"></i> @astroanimation</p>
+                <h4>Let's Talk</h4>
+                <div class="footer-contact-item"><i class="fas fa-phone-alt"></i> <span style="color:#7a8899;">+91 86752
+                        80561</span></div>
+                <div class="footer-contact-item"><i class="far fa-envelope"></i> <a
+                        href="mailto:info@astroanimationstudio.com"><span class="__cf_email__"
+                            data-cfemail="5831363e3718392b2c2a3739363135392c3137362b2c2d3c3137763b3735">info@astroanimationstudio.com</span></a>
+                </div>
+                <div class="footer-contact-item"><i class="fas fa-globe"></i> <a
+                        href="https://www.astroanimationstudio.com" target="_blank">astroanimationstudio.com</a></div>
+                <div class="footer-contact-item"><i class="fab fa-instagram"></i> <span
+                        style="color:#7a8899;">@astroanimation</span></div>
             </div>
         </div>
-        <div class="copyright">Copyright © 2026 Astro Animation Studio — international creative studio. All rights
-            reserved.</div>
+        <div class="copyright">
+            Copyright &copy; 2026 Astro Animation Studio — International Creative Studio. All rights reserved.
+        </div>
     </footer>
 
-    <!-- interactive modal (iframe pointing to original path) -->
-
-
+    <!-- MODALS -->
     <div id="interactiveModal" class="interactive-modal">
-        <div class="modal-content"><span class="modal-close" onclick="closeInteractive()">&times;</span><iframe
-                style="width:100%; height:100%;" src="/cbse/cbse.html"></iframe></div>
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('interactiveModal')">&times;</span>
+            <iframe src="/cbse/cbse.html" allowfullscreen></iframe>
+        </div>
     </div>
 
+    <div id="interactiveModal2" class="interactive-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('interactiveModal2')">&times;</span>
+            <iframe src="/sne/Untitled-1.html" allowfullscreen></iframe>
+        </div>
+    </div>
 
-
-
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
-        window.onload = () => { setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1400); };
+        // ── LOADER ──
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500);
+        });
 
-        // slider
-        const slides = document.querySelectorAll('.slide'); let idx = 0;
-        setInterval(() => { slides[idx].classList.remove('active'); idx = (idx + 1) % slides.length; slides[idx].classList.add('active'); }, 4500);
+        // ── SCROLL PROGRESS + NAVBAR ──
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
 
-        // reveal on scroll (light)
-        function reveal() { document.querySelectorAll('.service-card, .team-member, .section-title').forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight - 80) el.style.opacity = '1'; }); }
-        window.addEventListener('scroll', reveal); reveal();
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+            document.getElementById('backTop').classList.toggle('visible', window.scrollY > 400);
+        });
 
-        // typewriter effect
-        const typeEl = document.getElementById('typeText');
-        const phrases = ['Smart Learning for Smart People', 'Upgrade Skills with Animation', 'Modern Digital Education', 'Learn Anytime, Anywhere'];
-        let i = 0, j = 0, isDeleting = false, current = '';
-        function typeEffect() {
-            current = phrases[i];
-            if (!isDeleting) { typeEl.textContent = current.slice(0, ++j); if (j === current.length) { isDeleting = true; setTimeout(typeEffect, 1400); return; } }
-            else { typeEl.textContent = current.slice(0, --j); if (j === 0) { isDeleting = false; i = (i + 1) % phrases.length; } }
-            setTimeout(typeEffect, 80);
+        // ── HERO SLIDER with dots ──
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.getElementById('sliderDots');
+        let currentSlide = 0;
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        });
+
+        function goToSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            dotsContainer.children[currentSlide].classList.remove('active');
+            currentSlide = n;
+            slides[currentSlide].classList.add('active');
+            dotsContainer.children[currentSlide].classList.add('active');
         }
-        typeEffect();
 
-        // rotating quotes
-        const quotes = ["Education is the passport to the future.", "Learning never exhausts the mind.", "Digital learning is the future.", "Knowledge is power."];
-        let qIdx = 0; const quoteEl = document.getElementById('quote');
-        setInterval(() => { quoteEl.textContent = quotes[qIdx]; qIdx = (qIdx + 1) % quotes.length; }, 2000);
+        setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4500);
 
-        // offer close
-        document.getElementById('offerClose').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('offerFloat').style.display = 'none'; });
+        // ── STAR CANVAS ──
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
 
-        // interactive modal
-        window.openInteractive = () => { document.getElementById('interactiveModal').style.display = 'flex'; document.body.style.overflow = 'hidden'; };
-        window.closeInteractive = () => { document.getElementById('interactiveModal').style.display = 'none'; document.body.style.overflow = 'auto'; };
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
 
-        // contact button toggles social highlight (optional) – just keep
-        document.getElementById('contactBtn').addEventListener('click', (e) => { e.preventDefault(); document.querySelector('.social-dock').style.opacity = '0.5'; setTimeout(() => document.querySelector('.social-dock').style.opacity = '1', 300); });
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < 160; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 1.5 + 0.3,
+                    o: Math.random(),
+                    speed: Math.random() * 0.3 + 0.05
+                });
+            }
+        }
 
-        // for about typewriter
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => {
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(200, 190, 255, ${s.o})`;
+                ctx.fill();
+                s.o += (Math.random() - 0.5) * 0.02;
+                s.o = Math.max(0.1, Math.min(0.9, s.o));
+            });
+            requestAnimationFrame(drawStars);
+        }
 
-        const aboutTypingText = `We craft visual stories that inspire, imagining and innovating at the edge of animation. With a deep passion and seasoned expertise, our team transforms raw ideas into stunning 2D and 3D animated experiences that captivate and engage. Whether it's character creation or immersive storytelling, we specialize in turning visions into vibrant realities.
+        resizeCanvas(); initStars(); drawStars();
+        window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
+
+        // ── ABOUT TYPEWRITER ──
+        const aboutText = `We craft visual stories that inspire, imagining and innovating at the edge of animation. With deep passion and seasoned expertise, our team transforms raw ideas into stunning 2D and 3D animated experiences that captivate and engage.
+
+Whether it's character creation or immersive storytelling, we specialize in turning visions into vibrant realities.
 
 Driven by a pursuit of excellence, we view each project as a canvas for creative exploration. By blending art with cutting-edge technology, we deliver animations that not only look beautiful but also connect deeply with audiences.
 
-Step into a world where imagination leads the way and every frame tells a story. At Astro Animation Studio, we're not just animating—we’re redefining what animation can be.
+At Astro Animation Studio, we're not just animating — we're redefining what animation can be. ✦`;
 
-Thank you for being part of our journey. Together, let’s bring the extraordinary to life.✦`;
-
-        let aboutCharIndex = 0;
-        let aboutTypingSpeed = 25;
+        let aboutIdx = 0;
+        const typewriterEl = document.getElementById('typewriter');
 
         function startAboutTyping() {
+            if (aboutIdx < aboutText.length) {
+                const ch = aboutText.charAt(aboutIdx);
+                typewriterEl.innerHTML += ch === '\n' ? '<br><br>' : ch;
+                aboutIdx++;
+                setTimeout(startAboutTyping, ch === '.' || ch === '!' ? 200 : 22);
+            }
+        }
 
-            if (aboutCharIndex < aboutTypingText.length) {
+        // Start typing when about section is visible
+        const aboutObserver = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && aboutIdx === 0) {
+                startAboutTyping();
+            }
+        }, { threshold: 0.2 });
+        aboutObserver.observe(document.getElementById('about'));
 
-                document.getElementById("typewriter").innerHTML += aboutTypingText.charAt(aboutCharIndex);
+        // ── ANIMATED COUNTERS ──
+        function animateCounter(el) {
+            const target = parseInt(el.dataset.target);
+            let count = 0;
+            const step = Math.ceil(target / 60);
+            const interval = setInterval(() => {
+                count = Math.min(count + step, target);
+                el.textContent = count;
+                if (count >= target) clearInterval(interval);
+            }, 30);
+        }
 
-                aboutCharIndex++;
+        const counterObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.querySelectorAll('.counter').forEach(animateCounter);
+                    counterObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        document.querySelectorAll('.about-stats').forEach(el => counterObserver.observe(el));
 
-                setTimeout(startAboutTyping, aboutTypingSpeed);
+        // ── SCROLL REVEAL ──
+        const revealObserver = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('visible'), i * 80);
+                    revealObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
 
+        document.querySelectorAll('.service-card, .video-card, .interactive-card, .team-member').forEach(el => revealObserver.observe(el));
+
+        // ── TYPEWRITER PHRASES ──
+        const typeEl = document.getElementById('typeText');
+        const phrases = ['Smart Learning for Smart People', 'Upgrade Skills with Animation', 'Modern Digital Education', 'Learn Anytime, Anywhere'];
+        let pI = 0, cI = 0, deleting = false;
+
+        function typeEffect() {
+            const cur = phrases[pI];
+            typeEl.textContent = deleting ? cur.slice(0, --cI) : cur.slice(0, ++cI);
+            if (!deleting && cI === cur.length) { deleting = true; setTimeout(typeEffect, 1400); return; }
+            if (deleting && cI === 0) { deleting = false; pI = (pI + 1) % phrases.length; }
+            setTimeout(typeEffect, deleting ? 55 : 85);
+        }
+        typeEffect();
+
+        // Rotating quotes
+        const quotes = [
+            '"Education is the passport to the future." — Malcolm X',
+            '"Learning never exhausts the mind." — Leonardo da Vinci',
+            '"Digital learning is the future." — Anant Agarwal',
+            '"Knowledge is power." — Francis Bacon'
+        ];
+        let qI = 0;
+        const quoteEl = document.getElementById('quote');
+        quoteEl.textContent = quotes[0];
+        setInterval(() => { qI = (qI + 1) % quotes.length; quoteEl.style.opacity = 0; setTimeout(() => { quoteEl.textContent = quotes[qI]; quoteEl.style.opacity = 1; }, 300); }, 2800);
+        quoteEl.style.transition = 'opacity 0.3s';
+
+        // ── MODALS (unified) ──
+        function openModal(id) {
+            document.getElementById(id).classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        // Close modal on backdrop click
+        document.querySelectorAll('.interactive-modal').forEach(m => {
+            m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
+        });
+        // Close on ESC
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.interactive-modal.open').forEach(m => closeModal(m.id));
+            }
+        });
+
+        // ── HAMBURGER MENU ──
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('open');
+            document.getElementById('hamburger').classList.toggle('open');
+        }
+        function closeMenu() {
+            document.getElementById('navLinks').classList.remove('open');
+            document.getElementById('hamburger').classList.remove('open');
+        }
+
+        // ── CONTACT FORM (EmailJS) ──
+        // Step 1: Replace these 3 values after setting up emailjs.com
+        const EJS_PUBLIC_KEY = 'C_CW9OGB97FBYuXVM';    // Account → API Keys → Public Key
+        const EJS_SERVICE_ID = 'service_fl29dyl';    // Email Services → your service ID
+        const EJS_TEMPLATE_ID = 'template_03hzadi';  // Email Templates → your template ID
+
+        // Load EmailJS SDK
+        (function () {
+            const s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+            s.onload = () => emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+            document.head.appendChild(s);
+        })();
+
+        async function submitForm() {
+            const name = document.getElementById('cf-name').value.trim();
+            const email = document.getElementById('cf-email').value.trim();
+            const service = document.getElementById('cf-service').value;
+            const message = document.getElementById('cf-message').value.trim();
+
+            if (!name || !email || !message) {
+                alert('Please fill in your name, email, and message.');
+                return;
             }
 
+            const btn = document.querySelector('.submit-btn');
+            btn.textContent = 'Sending…';
+            btn.disabled = true;
+
+            try {
+                await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+                    from_name: name,
+                    from_email: email,
+                    service_type: service || 'Not specified',
+                    message: message
+                });
+                btn.style.display = 'none';
+                document.getElementById('formSuccess').style.display = 'block';
+            } catch (err) {
+                console.error('EmailJS error:', err);
+                btn.textContent = 'Send Message ✦';
+                btn.disabled = false;
+                alert('Could not send message. Please email us directly at info@astroanimationstudio.com');
+            }
         }
-
-        window.addEventListener("load", startAboutTyping);
-
-
-
-        function openInteractive2() {
-            document.getElementById("interactiveModal2").style.display = "flex";
-        }
-
-        function closeInteractive2() {
-            document.getElementById("interactiveModal2").style.display = "none";
-        }
-
-
 
     </script>
 </body>
