@@ -109,6 +109,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            gap: 2rem;
             transition: opacity 0.6s, visibility 0.6s;
         }
 
@@ -117,104 +118,121 @@
             visibility: hidden;
         }
 
-        .loader-text {
-            margin-top: 28px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 4px;
+        /* ── Color Wipe Reveal ── */
+        .wipe-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.4rem;
+        }
+
+        .wipe-word {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: 8px;
             text-transform: uppercase;
+            position: relative;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .wipe-word::after {
+            content: attr(data-t);
+            position: absolute;
+            top: 0;
+            left: 0;
             background: linear-gradient(90deg, #4285f4, #ea4335, #fbbc05, #34a853);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0%;
+            animation: wipeReveal 2.4s cubic-bezier(0.77, 0, 0.18, 1) infinite;
         }
 
-        /* ── Particle Burst — Google Colors ── */
-        .particle-burst {
-            position: relative;
-            width: 90px;
-            height: 90px;
+        @keyframes wipeReveal {
+            0% {
+                width: 0%;
+            }
+
+            60%,
+            80% {
+                width: 100%;
+            }
+
+            100% {
+                width: 0%;
+            }
         }
 
-        .pb-core {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            transform: translate(-50%, -50%);
-            background: #4285f4;
-            border-radius: 50%;
-            animation: pbCorePulse 1s ease-in-out infinite;
+        .wipe-sub {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.25);
+            font-family: 'DM Sans', sans-serif;
+            animation: subFade 2.4s ease-in-out infinite;
         }
 
-        @keyframes pbCorePulse {
+        @keyframes subFade {
 
             0%,
             100% {
-                transform: translate(-50%, -50%) scale(1);
-                box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.5);
+                opacity: 0.2;
             }
 
             50% {
-                transform: translate(-50%, -50%) scale(1.3);
-                box-shadow: 0 0 0 12px rgba(66, 133, 244, 0);
+                opacity: 0.7;
             }
         }
 
-        .pb-particle {
-            position: absolute;
+        .wipe-dot-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .wdot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            animation: pbOrbit linear infinite;
+            animation: wdPop 1.6s ease-in-out infinite;
         }
 
-        @keyframes pbOrbit {
-            from {
-                transform: rotate(var(--a)) translateX(36px) rotate(calc(-1 * var(--a)));
+        @keyframes wdPop {
+
+            0%,
+            100% {
+                transform: scale(0.5);
+                opacity: 0.25;
             }
 
-            to {
-                transform: rotate(calc(var(--a) + 360deg)) translateX(36px) rotate(calc(-1 * var(--a) - 360deg));
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
             }
         }
 
-        .pb-p1 {
+        .wd1 {
             background: #4285f4;
-            --a: 0deg;
-            animation-duration: 1.8s;
+            animation-delay: 0s;
         }
 
-        .pb-p2 {
+        .wd2 {
             background: #ea4335;
-            --a: 60deg;
-            animation-duration: 2.2s;
+            animation-delay: 0.2s;
         }
 
-        .pb-p3 {
+        .wd3 {
             background: #fbbc05;
-            --a: 120deg;
-            animation-duration: 1.5s;
+            animation-delay: 0.4s;
         }
 
-        .pb-p4 {
+        .wd4 {
             background: #34a853;
-            --a: 180deg;
-            animation-duration: 2.6s;
-        }
-
-        .pb-p5 {
-            background: #4285f4;
-            --a: 240deg;
-            animation-duration: 1.9s;
-        }
-
-        .pb-p6 {
-            background: #ea4335;
-            --a: 300deg;
-            animation-duration: 2.1s;
+            animation-delay: 0.6s;
         }
 
         .navbar {
@@ -1671,16 +1689,16 @@
     <div id="scroll-progress"></div>
 
     <div id="loader">
-        <div class="particle-burst">
-            <div class="pb-core"></div>
-            <div class="pb-particle pb-p1"></div>
-            <div class="pb-particle pb-p2"></div>
-            <div class="pb-particle pb-p3"></div>
-            <div class="pb-particle pb-p4"></div>
-            <div class="pb-particle pb-p5"></div>
-            <div class="pb-particle pb-p6"></div>
+        <div class="wipe-wrap">
+            <div class="wipe-word" data-t="ASTRO">ASTRO </div>
+            <div class="wipe-sub">Animation Studio</div>
+            <div class="wipe-dot-row">
+                <div class="wdot wd1"></div>
+                <div class="wdot wd2"></div>
+                <div class="wdot wd3"></div>
+                <div class="wdot wd4"></div>
+            </div>
         </div>
-        <div class="loader-text">Astro Animation Studio</div>
     </div>
 
     <div class="social-dock">
