@@ -117,31 +117,104 @@
             visibility: hidden;
         }
 
-        .loader-ring {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-top-color: var(--purple);
-            border-right-color: var(--blue);
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
         .loader-text {
-            margin-top: 22px;
+            margin-top: 28px;
             font-size: 1.1rem;
             font-weight: 700;
             letter-spacing: 4px;
             text-transform: uppercase;
-            background: var(--grad);
+            background: linear-gradient(90deg, #4285f4, #ea4335, #fbbc05, #34a853);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        /* ── Particle Burst — Google Colors ── */
+        .particle-burst {
+            position: relative;
+            width: 90px;
+            height: 90px;
+        }
+
+        .pb-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            transform: translate(-50%, -50%);
+            background: #4285f4;
+            border-radius: 50%;
+            animation: pbCorePulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pbCorePulse {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.5);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.3);
+                box-shadow: 0 0 0 12px rgba(66, 133, 244, 0);
+            }
+        }
+
+        .pb-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            animation: pbOrbit linear infinite;
+        }
+
+        @keyframes pbOrbit {
+            from {
+                transform: rotate(var(--a)) translateX(36px) rotate(calc(-1 * var(--a)));
+            }
+
+            to {
+                transform: rotate(calc(var(--a) + 360deg)) translateX(36px) rotate(calc(-1 * var(--a) - 360deg));
+            }
+        }
+
+        .pb-p1 {
+            background: #4285f4;
+            --a: 0deg;
+            animation-duration: 1.8s;
+        }
+
+        .pb-p2 {
+            background: #ea4335;
+            --a: 60deg;
+            animation-duration: 2.2s;
+        }
+
+        .pb-p3 {
+            background: #fbbc05;
+            --a: 120deg;
+            animation-duration: 1.5s;
+        }
+
+        .pb-p4 {
+            background: #34a853;
+            --a: 180deg;
+            animation-duration: 2.6s;
+        }
+
+        .pb-p5 {
+            background: #4285f4;
+            --a: 240deg;
+            animation-duration: 1.9s;
+        }
+
+        .pb-p6 {
+            background: #ea4335;
+            --a: 300deg;
+            animation-duration: 2.1s;
         }
 
         .navbar {
@@ -1598,7 +1671,15 @@
     <div id="scroll-progress"></div>
 
     <div id="loader">
-        <div class="loader-ring"></div>
+        <div class="particle-burst">
+            <div class="pb-core"></div>
+            <div class="pb-particle pb-p1"></div>
+            <div class="pb-particle pb-p2"></div>
+            <div class="pb-particle pb-p3"></div>
+            <div class="pb-particle pb-p4"></div>
+            <div class="pb-particle pb-p5"></div>
+            <div class="pb-particle pb-p6"></div>
+        </div>
         <div class="loader-text">Astro Animation Studio</div>
     </div>
 
