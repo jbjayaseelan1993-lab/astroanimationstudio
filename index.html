@@ -1461,6 +1461,13 @@
             animation: scrollMarquee 20s linear infinite;
         }
 
+        .marquee-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
         .marquee-content img {
             height: 56px;
             width: auto;
@@ -1472,6 +1479,19 @@
         .marquee-content img:hover {
             filter: none;
             opacity: 1;
+        }
+
+        .marquee-item:hover img {
+            filter: none;
+            opacity: 1;
+        }
+
+        .marquee-name {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--muted);
+            letter-spacing: 0.3px;
+            white-space: nowrap;
         }
 
         @keyframes scrollMarquee {
@@ -2385,12 +2405,30 @@
         <div class="clients-label">Trusted by Innovative Partners</div>
         <div class="marquee">
             <div class="marquee-content">
-                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
-                <img src="/images/sne Logo.png" alt="SNE"><img src="/images/sne Logo.png" alt="SNE">
+                <div class="marquee-item"><img src="/images/sne Logo.png" alt="SNE"><span
+                        class="marquee-name">SNE</span></div>
+                <div class="marquee-item"><img src="/images/krishya-skin-clinic-logo.png"
+                        alt="Krishya Skin Clinic"><span class="marquee-name">Krishya Skin Clinic</span></div>
+                <div class="marquee-item"><img src="/images/sne Logo.png" alt="SNE"><span
+                        class="marquee-name">SNE</span></div>
+                <div class="marquee-item"><img src="/images/krishya-skin-clinic-logo.png"
+                        alt="Krishya Skin Clinic"><span class="marquee-name">Krishya Skin Clinic</span></div>
+                <div class="marquee-item"><img src="/images/sne Logo.png" alt="SNE"><span
+                        class="marquee-name">SNE</span></div>
+                <div class="marquee-item"><img src="/images/krishya-skin-clinic-logo.png"
+                        alt="Krishya Skin Clinic"><span class="marquee-name">Krishya Skin Clinic</span></div>
+                <div class="marquee-item"><img src="/images/sne Logo.png" alt="SNE"><span
+                        class="marquee-name">SNE</span></div>
+                <div class="marquee-item"><img src="/images/krishya-skin-clinic-logo.png"
+                        alt="Krishya Skin Clinic"><span class="marquee-name">Krishya Skin Clinic</span></div>
+                <div class="marquee-item"><img src="/images/sne Logo.png" alt="SNE"><span
+                        class="marquee-name">SNE</span></div>
+                <div class="marquee-item"><img src="/images/krishya-skin-clinic-logo.png"
+                        alt="Krishya Skin Clinic"><span class="marquee-name">Krishya Skin Clinic</span></div>
+                <div class="marquee-item"><img src="/images/sne Logo.png" alt="SNE"><span
+                        class="marquee-name">SNE</span></div>
+                <div class="marquee-item"><img src="/images/krishya-skin-clinic-logo.png"
+                        alt="Krishya Skin Clinic"><span class="marquee-name">Krishya Skin Clinic</span></div>
             </div>
         </div>
     </div>
